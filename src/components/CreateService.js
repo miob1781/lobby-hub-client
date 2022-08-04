@@ -4,7 +4,7 @@ import {NavLink, useParams} from "react-router-dom";
 export function CreateService(props){
     return (
         <div>
-            <h2>Create Service</h2>
+            <h3>Create Service</h3>
         </div>
     )
 }

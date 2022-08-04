@@ -14,9 +14,6 @@ export function NavBar(props){
             <NavLink to="/our-mission">
                 <button>Our Mission</button>
             </NavLink>
-            <NavLink to="/signup">
-                <button>Signup</button>
-            </NavLink>
             <NavLink to="/login">
                 <button>Login</button>
             </NavLink>
