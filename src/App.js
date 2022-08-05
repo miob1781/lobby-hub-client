@@ -19,10 +19,9 @@ function App() {
         <div className="App">
             <NavBar />
             <Routes>
-                <Route path="/" element={isLoggedIn ? <IsPrivate><Account /></IsPrivate> : <Home />} />
+                <Route path="/" element={isLoggedIn ? <Account /> : <Home />} />
                 <Route path="/signup/:type" element={<IsAnon><Signup /></IsAnon>} />
                 <Route path="/login" element={<IsAnon><Login /></IsAnon>} />
-                <Route path="/account" element={<IsPrivate><Account /></IsPrivate>} />
                 <Route path="/services" element={<IsPrivate><ServicesList /></IsPrivate>} />
                 <Route path="/our-mission" element={<OurMission />} />
             </Routes>

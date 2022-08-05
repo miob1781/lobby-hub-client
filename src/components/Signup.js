@@ -1,11 +1,13 @@
-import {useState, useEffect, useContext} from "react";
-import {NavLink, useParams, useNavigate} from "react-router-dom";
-import {KeywordsList} from "./KeywordsList";
+import { useState, useEffect, useContext } from "react";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
+import { KeywordsList } from "./KeywordsList";
 import axios from "axios";
+import { AuthContext } from "../context/auth.context";
 
-export function Signup(props){
-    const {type} = useParams()
+export function Signup(props) {
+    const { type } = useParams()
     const navigate = useNavigate();
+    const { setUser, storeToken, authenticateUser } = useContext(AuthContext)
 
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
@@ -14,6 +16,7 @@ export function Signup(props){
     const [position, setPosition] = useState("")
     const [party, setParty] = useState("")
     const [areasOfInfluence, setAreasOfInfluence] = useState([])
+    const [errorMessage, setErrorMessage] = useState(undefined);
 
     const userData = {
         username,
@@ -26,24 +29,30 @@ export function Signup(props){
         areasOfInfluence
     }
 
-    const submitSignup = () => {
+    const submitSignup = (event) => {
+        event.preventDefault()
         axios.post(`${process.env.REACT_APP_URL}/auth/signup`, userData)
-            .then(() => {
-                navigate("/account")
+            .then((res) => {
+                console.log('JWT token:', res.data.authToken);
+                storeToken(res.data.authToken)
+                authenticateUser()
+                navigate('/')
             })
-            .catch(err => {
-                console.log("An error has occurred while signing up a new user:", err);
+            .catch((error) => {
+                const errorDescription = error.response.data.errorMessage;
+                setErrorMessage(errorDescription);
             })
     }
 
-    return (
-        <div>
-            <h2>Signup</h2>
+return (
+    <div>
+        <h2>Signup</h2>
+        <form onSubmit={submitSignup}>
             <div className="inputContainer">
                 <label>Username: <input
                     type="text"
                     value={username}
-                    onChange={({target}) => setUsername(target.value)}
+                    onChange={({ target }) => setUsername(target.value)}
                     required
                 /></label>
             </div>
@@ -51,7 +60,7 @@ export function Signup(props){
                 <label>Email: <input
                     type="email"
                     value={email}
-                    onChange={({target}) => setEmail(target.value)}
+                    onChange={({ target }) => setEmail(target.value)}
                     required
                 /></label>
             </div>
@@ -59,40 +68,39 @@ export function Signup(props){
                 <label>Password: <input
                     type="password"
                     value={password}
-                    onChange={({target}) => setPassword(target.value)}
+                    onChange={({ target }) => setPassword(target.value)}
                     required
                 /></label>
             </div>
-            <div className="inputContainer" style={{display: type === "lobbyist" ? "block" : "none"}}>
+            <div className="inputContainer" style={{ display: type === "lobbyist" ? "block" : "none" }}>
                 <label>Organization: <input
                     type="text"
                     value={organization}
-                    onChange={({target}) => setOrganization(target.value)}
+                    onChange={({ target }) => setOrganization(target.value)}
                 /></label>
             </div>
-            <div className="inputContainer" style={{display: type === "politician" ? "block" : "none"}}>
+            <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
                 <label>Position: <input
                     type="text"
                     value={position}
-                    onChange={({target}) => setPosition(target.value)}
-                    /></label>
+                    onChange={({ target }) => setPosition(target.value)}
+                /></label>
             </div>
-            <div className="inputContainer" style={{display: type === "politician" ? "block" : "none"}}>
+            <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
                 <label>Party: <input
                     type="text"
                     value={party}
-                    onChange={({target}) => setParty(target.value)}
+                    onChange={({ target }) => setParty(target.value)}
                 /></label>
             </div>
-            <div className="inputContainer" style={{display: type === "politician" ? "block" : "none"}}>
+            <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
                 <KeywordsList setAreasOfInfluence={setAreasOfInfluence} />
             </div>
-            <button
-                onClick={submitSignup}
-            >Signup!</button>
-            <NavLink to="/">
-                <button>Back</button>
-            </NavLink>
-        </div>
-    )
+            <button>Signup!</button>
+        </form>
+        <NavLink to="/">
+            <button type="button">Back</button>
+        </NavLink>
+    </div>
+)
 }

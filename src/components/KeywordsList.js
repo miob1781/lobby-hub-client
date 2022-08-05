@@ -76,9 +76,9 @@ export function KeywordsList(props) {
                 value="science"
                 onChange={handleCheckboxInput}
             /></label>
-            <label>Social issues: <input
+            <label>Social affairs: <input
                 type="checkbox"
-                value="social issues"
+                value="social affairs"
                 onChange={handleCheckboxInput}
             /></label>
             <label>Tax: <input
