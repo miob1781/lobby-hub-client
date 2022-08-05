@@ -1,3 +1,25 @@
 .App {
   text-align: center;
+  margin-top: 50px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+.link button, form.link button {
+  background-color: burlywood;
+  color: white;
+  padding: 10px;
+  border: 1px solid grey;
+  border-radius: 3%;
+  margin: 0 5px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+img {
+  width: 300px;
 }

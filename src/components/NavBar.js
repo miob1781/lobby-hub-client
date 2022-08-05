@@ -1,22 +1,27 @@
 import {useState, useEffect, useContext} from "react";
 import {NavLink, useParams} from "react-router-dom";
+import {AuthContext} from "../context/auth.context";
 
 export function NavBar(props){
-    const {user} = props
+    const {logOutUser, isLoggedIn} = useContext(AuthContext)
     return (
         <nav>
-            <NavLink to="/account">
-                <button>Account</button>
+            <NavLink className="link" to="/">
+                <button>Home</button>
             </NavLink>
-            <NavLink to="/services">
+            <NavLink className="link" to="/services" style={{display: isLoggedIn ? "block" : "none"}}>
                 <button>Services</button>
             </NavLink>
-            <NavLink to="/our-mission">
+            <NavLink className="link" to="/our-mission">
                 <button>Our Mission</button>
             </NavLink>
-            <NavLink to="/login">
+            {isLoggedIn ? 
+            <form className="link">
+                <button type="button" onClick={logOutUser}>Logout</button>
+            </form> :
+            <NavLink className="link" to="/login">
                 <button>Login</button>
-            </NavLink>
+            </NavLink>}
         </nav>
     )
 }
