@@ -4,9 +4,20 @@ import axios from "axios"
 export const AuthContext = createContext()
 
 export function AuthProviderWrapper(props){
+    const initialUserState = {
+        username: "",
+        password: "",
+        email: "",
+        type: "",
+        organization: "",
+        position: "",
+        party: "",
+        areasOfInfluence: []
+    }
+
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(initialUserState)
 
     const storeToken = token => {
         localStorage.setItem("authToken", token)
@@ -25,12 +36,12 @@ export function AuthProviderWrapper(props){
             }).catch(err => {
                 setIsLoggedIn(false)
                 setIsLoading(false)
-                setUser(null)
+                setUser(initialUserState)
             })
         } else {
             setIsLoggedIn(false)
             setIsLoading(false)
-            setUser(null)
+            setUser(initialUserState)
         }
     }
 

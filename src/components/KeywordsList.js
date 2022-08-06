@@ -1,15 +1,15 @@
 export function KeywordsList(props) {
-    const {setAreasOfInfluence} = props;
+    const {setObj} = props;
 
     const handleCheckboxInput = ({target}) => {
-        setAreasOfInfluence(prevAreasOfInfluence => {
-            let newArray = [...prevAreasOfInfluence]
-            if (newArray.includes(target.value)){
-                newArray = newArray.filter(el => el !== target.value)
+        setObj(prevObj => {
+            let keywords = {...prevObj}.keywords
+            if (keywords.includes(target.value)){
+                keywords = keywords.filter(el => el !== target.value)
             } else {
-                newArray.push(target.value)
+                keywords.push(target.value)
             }
-            return newArray
+            return {...prevObj, keywords}
         })
     }
 

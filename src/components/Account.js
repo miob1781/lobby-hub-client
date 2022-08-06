@@ -6,26 +6,27 @@ import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 
 export function Account(props) {
-    const { user, setUser } = useContext(AuthContext)
-    console.log("User in <Account />:", user);
+    const {user} = useContext(AuthContext)
+    const {_id, email, username, type, organization, position, party, areasOfInfluence} = user
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL}/auth/user/${user._id}`)
-            .then(res => {
-                setUser(res.data)
-            })
-    }, [])
+    const renderAreasOfInfluence = () => {
+        let content = areasOfInfluence.reduce((acc, val) => {
+            return acc += val + ", "
+        }, "")
+        content = content.slice(0, -2)
+        return <span>{content}</span>
+    }
 
     return (
         <div>
             <h2>Account</h2>
-            <p>User: {user.username}</p>
-            <p>Email: {user.email}</p>
-            <p>You are a {user.type}.</p>
-            <p style={{ display: user.type === "lobbyist" ? "block" : "none" }}>Organization: {user.organization || "none"}</p>
-            <p style={{ display: user.type === "politician" ? "block" : "none" }}>Position: {user.position || "none"}</p>
-            <p style={{ display: user.type === "politician" ? "block" : "none" }}>Party: {user.party || "none"}</p>
-            <p style={{ display: user.type === "politician" ? "block" : "none" }}>{user.areasOfInfluence}</p>
+            <p>User: {username}</p>
+            <p>Email: {email}</p>
+            <p>You are a {type}.</p>
+            <p style={{ display: type === "lobbyist" ? "block" : "none" }}>Organization: {organization || "none"}</p>
+            <p style={{ display: type === "politician" ? "block" : "none" }}>Position: {position || "none"}</p>
+            <p style={{ display: type === "politician" ? "block" : "none" }}>Party: {party || "none"}</p>
+            <p style={{ display: type === "politician" ? "block" : "none" }}>Areas of influence: {renderAreasOfInfluence()}</p>
             <EditAccount />
             <ServicesSnippet />
         </div>

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
@@ -6,6 +6,7 @@ import { AuthContext } from "../context/auth.context";
 export function Login(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
     const [errorMessage, setErrorMessage] = useState(undefined);
 
     const navigate = useNavigate();
