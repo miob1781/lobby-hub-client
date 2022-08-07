@@ -43,6 +43,7 @@ export function Login(props) {
                     type="text"
                     name="username"
                     value={username}
+                    autoComplete="username"
                     onChange={handleUsername}
                 />
 
@@ -51,6 +52,7 @@ export function Login(props) {
                     type="password"
                     name="password"
                     value={password}
+                    autoComplete="current-password"
                     onChange={handlePassword}
                 />
 

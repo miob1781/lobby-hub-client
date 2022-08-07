@@ -5,6 +5,7 @@ export const AuthContext = createContext()
 
 export function AuthProviderWrapper(props){
     const initialUserState = {
+        _id: "",
         username: "",
         password: "",
         email: "",

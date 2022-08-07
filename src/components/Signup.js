@@ -10,6 +10,14 @@ export function Signup(props) {
     const { user, setUser, storeToken, authenticateUser } = useContext(AuthContext)
     const [errorMessage, setErrorMessage] = useState(undefined);
 
+    const {_id, username, email, password, position, party, areasOfInfluence, organization} = user
+    let userData
+    if (type === "lobbyist"){
+        userData = {username, email, password, type, organization}
+    } else {
+        userData = {username, email, password, type, position, party, areasOfInfluence}
+    }
+
     const handleInputChange = (target, category) => {
         setUser(prevUser => {
             return {...prevUser, [category]: target.value}
@@ -18,16 +26,23 @@ export function Signup(props) {
 
     const submitSignup = (event) => {
         event.preventDefault()
-        const {username, email, password, position, party, areasOfInfluence, organization} = user
-        let userData
-        if (type === "lobbyist"){
-            userData = {username, email, password, type, organization}
-        } else {
-            userData = {username, email, password, type, position, party, areasOfInfluence}
-
-        }
-        console.log("submitted user data for signup:", user);
         axios.post(`${process.env.REACT_APP_URL}/auth/signup`, userData)
+            .then((res) => {
+                storeToken(res.data.authToken)
+                authenticateUser()
+            })
+            .then(() => {
+                navigate('/')
+            })
+            .catch((error) => {
+                const errorDescription = error.response.data.errorMessage;
+                setErrorMessage(errorDescription);
+            })
+    }
+
+    const submitUpdate = (event) => {
+        event.preventDefault()
+        axios.put(`${process.env.REACT_APP_URL}/auth/user/${_id}/edit`, userData)
             .then((res) => {
                 storeToken(res.data.authToken)
                 authenticateUser()
@@ -43,57 +58,59 @@ export function Signup(props) {
 
 return (
     <div>
-        <h2>Signup</h2>
-        <form onSubmit={submitSignup}>
+        <h2>{_id ? "Edit your user data" : "Signup"}</h2>
+        <form onSubmit={_id ? submitUpdate : submitSignup}>
             <div className="inputContainer">
                 <label>Username: <input
                     type="text"
-                    value={user.username}
+                    value={username}
                     onChange={({target}) => handleInputChange(target, "username")}
+                    autoComplete="username"
                     required
                 /></label>
             </div>
             <div className="inputContainer">
                 <label>Email: <input
                     type="email"
-                    value={user.email}
+                    value={email}
                     onChange={({target}) => handleInputChange(target, "email")}
                     required
-                /></label>
+                    /></label>
             </div>
             <div className="inputContainer">
                 <label>Password: <input
                     type="password"
-                    value={user.password}
+                    value={password}
                     onChange={({target}) => handleInputChange(target, "password")}
+                    autoComplete={_id ? "current-password" : "new-password"}
                     required
                 /></label>
             </div>
             <div className="inputContainer" style={{ display: type === "lobbyist" ? "block" : "none" }}>
                 <label>Organization: <input
                     type="text"
-                    value={user.organization}
+                    value={organization}
                     onChange={({ target }) => handleInputChange(target, "organization")}
                 /></label>
             </div>
             <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
                 <label>Position: <input
                     type="text"
-                    value={user.position}
+                    value={position}
                     onChange={({ target }) => handleInputChange(target, "position")}
                 /></label>
             </div>
             <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
                 <label>Party: <input
                     type="text"
-                    value={user.party}
+                    value={party}
                     onChange={({ target }) => handleInputChange(target, "party")}
                 /></label>
             </div>
             <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
-                <KeywordsList setArray={setUser} />
+                <KeywordsList setObj={setUser} areasOfInfluence={areasOfInfluence} />
             </div>
-            <button>Signup!</button>
+            <button>{_id ? "Edit" : "Signup!"}</button>
         </form>
         <NavLink to="/">
             <button type="button">Back</button>

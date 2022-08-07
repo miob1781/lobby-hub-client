@@ -22,6 +22,7 @@ function App() {
                 <Route path="/" element={isLoggedIn ? <Account /> : <Home />} />
                 <Route path="/signup/:type" element={<IsAnon><Signup /></IsAnon>} />
                 <Route path="/login" element={<IsAnon><Login /></IsAnon>} />
+                <Route path="/edit/:type" element={<IsPrivate><Signup /></IsPrivate>} />
                 <Route path="/services" element={<IsPrivate><ServicesList /></IsPrivate>} />
                 <Route path="/our-mission" element={<OurMission />} />
             </Routes>
