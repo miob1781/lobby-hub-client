@@ -8,6 +8,7 @@ import {Signup} from './components/Signup';
 import {Login} from './components/Login';
 import { OurMission } from './components/OurMission';
 import { ServicesList } from './components/ServicesList';
+import { Service } from './components/Service';
 import {CreateService} from './components/CreateService';
 import { IsAnon } from './components/IsAnon';
 import { IsPrivate } from './components/IsPrivate';
@@ -34,7 +35,8 @@ function App() {
                 <Route path="/login" element={<IsAnon><Login /></IsAnon>} />
                 <Route path="/edit/:type" element={<IsPrivate><Signup /></IsPrivate>} />
                 <Route path="/services" element={<IsPrivate><ServicesList renderAreasOfInfluence={renderAreasOfInfluence} /></IsPrivate>} />
-                <Route path="/services/:createOrEdit" element={<IsPrivate><CreateService /></IsPrivate>} />
+                <Route path="/services/form/:createOrEdit" element={<IsPrivate><CreateService /></IsPrivate>} />
+                <Route path="/services/:serviceId" element={<IsPrivate><Service renderAreasOfInfluence={renderAreasOfInfluence} /></IsPrivate>} />
                 <Route path="/our-mission" element={<OurMission />} />
             </Routes>
         </div>

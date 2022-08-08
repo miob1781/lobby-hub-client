@@ -10,9 +10,10 @@ export function Signup(props) {
     const {user, storeToken, authenticateUser, setUser} = useContext(AuthContext);
 
     const [formData, setFormData] = useState(user);
+    const [areasOfInfluence, setAreasOfInfluence] = useState([])
     const [errorMessage, setErrorMessage] = useState("");
 
-    const {_id, username, email, password, position, party, areasOfInfluence, organization} = formData
+    const {_id, username, email, password, position, party, organization} = formData
     let userData
     if (type === "lobbyist"){
         userData = {username, email, password, type, organization}
@@ -47,6 +48,7 @@ export function Signup(props) {
         axios.put(`${process.env.REACT_APP_URL}/auth/user/${_id}`, userData)
             .then((res) => {
                 setUser(res.data)
+                setFormData(res.data)
                 navigate('/')
             })
             .catch((error) => {
@@ -107,7 +109,7 @@ return (
                 /></label>
             </div>
             <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
-                <KeywordsList setObj={setFormData} areasOfInfluence={areasOfInfluence} />
+                <KeywordsList setAreasOfInfluence={setAreasOfInfluence} />
             </div>
             <button>{_id ? "Edit" : "Signup!"}</button>
         </form>
