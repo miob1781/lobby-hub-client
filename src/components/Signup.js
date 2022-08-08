@@ -5,12 +5,14 @@ import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 
 export function Signup(props) {
-    const { type } = useParams()
+    const {type} = useParams();
     const navigate = useNavigate();
-    const { user, setUser, storeToken, authenticateUser } = useContext(AuthContext)
-    const [errorMessage, setErrorMessage] = useState(undefined);
+    const {user, storeToken, authenticateUser, setUser} = useContext(AuthContext);
 
-    const {_id, username, email, password, position, party, areasOfInfluence, organization} = user
+    const [formData, setFormData] = useState(user);
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const {_id, username, email, password, position, party, areasOfInfluence, organization} = formData
     let userData
     if (type === "lobbyist"){
         userData = {username, email, password, type, organization}
@@ -19,7 +21,7 @@ export function Signup(props) {
     }
 
     const handleInputChange = (target, category) => {
-        setUser(prevUser => {
+        setFormData(prevUser => {
             return {...prevUser, [category]: target.value}
         })
     }
@@ -42,12 +44,9 @@ export function Signup(props) {
 
     const submitUpdate = (event) => {
         event.preventDefault()
-        axios.put(`${process.env.REACT_APP_URL}/auth/user/${_id}/edit`, userData)
+        axios.put(`${process.env.REACT_APP_URL}/auth/user/${_id}`, userData)
             .then((res) => {
-                storeToken(res.data.authToken)
-                authenticateUser()
-            })
-            .then(() => {
+                setUser(res.data)
                 navigate('/')
             })
             .catch((error) => {
@@ -108,7 +107,7 @@ return (
                 /></label>
             </div>
             <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
-                <KeywordsList setObj={setUser} areasOfInfluence={areasOfInfluence} />
+                <KeywordsList setObj={setFormData} areasOfInfluence={areasOfInfluence} />
             </div>
             <button>{_id ? "Edit" : "Signup!"}</button>
         </form>
