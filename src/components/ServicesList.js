@@ -5,7 +5,6 @@ import {CreateService} from "./CreateService";
 import axios from "axios";
 
 export function ServicesList(props){
-    const {renderAreasOfInfluence} = props
     const {user} = useContext(AuthContext)
     const {_id, email, username, type, organization, position, party, areasOfInfluence} = user
 
@@ -16,7 +15,6 @@ export function ServicesList(props){
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_URL}/services/${type}/${_id}`)
             .then(res => {
-                console.log("services returned from DB:", res.data)
                 setAgreedServices(res.data)
             })
             .catch(err => {
@@ -28,7 +26,6 @@ export function ServicesList(props){
         if (type === "politician"){
             axios.post(`${process.env.REACT_APP_URL}/services/services-matching-keywords`, { areasOfInfluence })
             .then(response => {
-                console.log("setting matching services:", response.data)
                 setMatchingServices(response.data)
             })
             .catch(err => {
@@ -60,6 +57,7 @@ export function ServicesList(props){
     return (
         <div>
             <h2>Services</h2>
+            <NavLink to="/services/form/create"><button>New Service</button></NavLink>
             <div style={{display: type === "politician" ? "block" : "none"}}>
                 <button type="button" onClick={() => setTypeOfServices("matching")}>Services matching your keywords</button>
                 <button type="button" onClick={() => setTypeOfServices("agreed")}>Services you agreed on</button>

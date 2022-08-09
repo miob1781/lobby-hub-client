@@ -10,7 +10,7 @@ export function Account(props) {
     const {user, logOutUser} = useContext(AuthContext)
     const {_id, email, username, type, organization, position, party, areasOfInfluence} = user
 
-    const handleDeleteAccount = (event) => {
+    const deleteAccount = (event) => {
         axios.delete(`${process.env.REACT_APP_URL}/auth/user/${_id}`)
             .then(() => {
                 logOutUser()
@@ -35,7 +35,7 @@ export function Account(props) {
                 <button>Edit Account</button>
             </NavLink>
             <form>
-                <button type="button" onClick={handleDeleteAccount}>Delete Account</button>
+                <button type="button" onClick={deleteAccount}>Delete Account</button>
             </form>
             <NavLink to="/services">
                 <button>Services</button>

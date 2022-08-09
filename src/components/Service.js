@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import axios from "axios";
 
@@ -8,6 +8,7 @@ export function Service(props) {
     const { serviceId } = useParams()
     const { user } = useContext(AuthContext)
     const { type } = user
+    const navigate = useNavigate()
 
     const [service, setService] = useState(null)
     const [matchingPoliticians, setMatchingPoliticians] = useState(null)
@@ -74,9 +75,25 @@ export function Service(props) {
         )
     }
 
+    const deleteService = (event) => {
+        axios.delete(`${process.env.REACT_APP_URL}/services/${serviceId}`)
+            .then(() => {
+                navigate("/services")
+            })
+            .catch(err => {
+                console.log("An error has occurred while deleting a service:", err)
+            })
+    }
+
     return (
         <div>
             {renderService()}
+            <NavLink to={`/services/form/${serviceId}`}>
+                <button>Edit</button>
+            </NavLink>
+            <form>
+                <button type="button" onClick={deleteService}>Delete Service</button>
+            </form>
             <NavLink to="/services">
                 <button>Back</button>
             </NavLink>

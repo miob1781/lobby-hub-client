@@ -7,7 +7,6 @@ export function KeywordsList(props) {
             if (keywords.includes(target.value)){
                 keywords = keywords.filter(el => el !== target.value)
             } else {
-                console.log("here to push")
                 keywords.push(target.value)
             }
             return keywords
