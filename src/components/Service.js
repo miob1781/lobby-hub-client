@@ -16,6 +16,7 @@ export function Service(props) {
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_URL}/services/${serviceId}`)
             .then(res => {
+                console.log("service after GET /services/:serviceId:", res.data)
                 setService(res.data)
             })
             .catch(err => {
@@ -36,12 +37,12 @@ export function Service(props) {
 
     const renderPoliticians = politicians => {
         return politicians?.map(politician => (
-            <article key={politician._id}>
-                <p>Name: {politician.username}</p>
-                <p>Email: {politician.email}</p>
-                <p>Position: {politician.position}</p>
-                <p>Party: {politician.party}</p>
-                {politician && renderAreasOfInfluence("politician", politician.areasOfInfluence)}
+            <article key={politician?._id}>
+                <p>Name: {politician?.username}</p>
+                <p>Email: {politician?.email}</p>
+                <p>Position: {politician?.position}</p>
+                <p>Party: {politician?.party}</p>
+                {politician && renderAreasOfInfluence("politician", politician?.areasOfInfluence)}
             </article>
         ))
     }
@@ -53,18 +54,18 @@ export function Service(props) {
             <div>
                 <h3>{service.title}</h3>
                 <div style={{ display: type === "politician" ? "block" : "none" }}>
-                    <p>Requested by: {service.lobbyist.username}</p>
-                    <p>Organization: {service.lobbyist.organization}</p>
+                    <p>Requested by: {service?.lobbyist?.username}</p>
+                    <p>Organization: {service?.lobbyist?.organization}</p>
                 </div>
-                {renderAreasOfInfluence("politician", service.areasOfInfluence)}
-                <p>Financial benefit: {service.financialOffer} $</p>
-                <p>Other benefits: {service.otherOffers}</p>
+                {renderAreasOfInfluence("politician", service?.areasOfInfluence)}
+                <p>Financial benefit: {service?.financialOffer} $</p>
+                <p>Other benefits: {service?.otherOffers}</p>
                 <div style={{ display: type === "lobbyist" ? "block" : "none" }}>
                     {service.politicians.length === 0
                         ? <p>So far no politician has accepted your offer.</p>
                         :   <div>
                                 <p>These politicians have accepted your offer:</p>
-                                {renderPoliticians(service.politicians)}
+                                {renderPoliticians(service?.politicians)}
                             </div>}
                 </div>
                 <div style={{ display: type === "lobbyist" ? "block" : "none" }}>
@@ -85,15 +86,28 @@ export function Service(props) {
             })
     }
 
+    const acceptOffer = () => {
+        axios.put(`${process.env.REACT_APP_URL}/services/${serviceId}`, {...service, politicians: [user._id]})
+            .then(response => {
+                setService(prevService => ({...service, politicians: [...service.politicians, user]}))
+            })
+            .catch(err => {
+                console.log("An error has occurred while accepting an offer:", err)
+            })
+    }
+
     return (
         <div>
             {renderService()}
-            <NavLink to={`/services/form/${serviceId}`}>
-                <button>Edit</button>
-            </NavLink>
+            <form style={{display: type === "politician" ? "block" : "none"}}>
+                <button type="button" onClick={acceptOffer}>Accept Offer</button>
+            </form>
             <form>
                 <button type="button" onClick={deleteService}>Delete Service</button>
             </form>
+            <NavLink to={`/services/form/${serviceId}`}>
+                <button>Edit</button>
+            </NavLink>
             <NavLink to="/services">
                 <button>Back</button>
             </NavLink>
