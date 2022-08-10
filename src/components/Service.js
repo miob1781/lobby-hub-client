@@ -9,12 +9,13 @@ export function Service(props) {
     const { user } = useContext(AuthContext)
     const { type } = user
     const navigate = useNavigate()
+    const authToken = localStorage.getItem("authToken")
 
     const [service, setService] = useState(null)
     const [matchingPoliticians, setMatchingPoliticians] = useState(null)
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL}/services/${serviceId}`)
+        axios.get(`${process.env.REACT_APP_URL}/services/${serviceId}`, { headers: { Authorization: `Bearer ${authToken}` } })
             .then(res => {
                 setService(res.data)
             })
@@ -25,7 +26,7 @@ export function Service(props) {
 
     useEffect(() => {
         if (!service) return;
-        axios.post(`${process.env.REACT_APP_URL}/services/politicians`, { areasOfInfluence: service.areasOfInfluence })
+        axios.post(`${process.env.REACT_APP_URL}/services/politicians`, { areasOfInfluence: service.areasOfInfluence }, { headers: { Authorization: `Bearer ${authToken}` } })
             .then(res => {
                 setMatchingPoliticians(res.data)
             })
@@ -33,6 +34,27 @@ export function Service(props) {
                 console.log("An error has occurred while loading politicians matching service:", err);
             })
     }, [service])
+
+    const deleteService = (event) => {
+        axios.delete(`${process.env.REACT_APP_URL}/services/${serviceId}`, { headers: { Authorization: `Bearer ${authToken}` } })
+            .then(() => {
+                navigate("/services")
+            })
+            .catch(err => {
+                console.log("An error has occurred while deleting a service:", err)
+            })
+    }
+
+    const acceptOffer = () => {
+        axios.put(`${process.env.REACT_APP_URL}/services/${serviceId}/accept-offer`, { politician: user._id }, { headers: { Authorization: `Bearer ${authToken}` } })
+            .then(response => {
+                console.log("service after accepting offer:", response.data)
+                setService(response.data)
+            })
+            .catch(err => {
+                console.log("An error has occurred while accepting an offer:", err)
+            })
+    }
 
     const renderPoliticians = politicians => {
         return politicians?.map(politician => (
@@ -52,7 +74,7 @@ export function Service(props) {
         return (
             <div>
                 <h3>{service.title}</h3>
-                <p style={{display: type === "politician" && service?.politicians.find(pol => pol._id === user._id) ? "block" : "none"}}>You have accepted this offer.</p>
+                <p style={{ display: type === "politician" && service?.politicians.find(pol => pol._id === user._id) ? "block" : "none" }}>You have accepted this offer.</p>
                 <p>Description: {service.description}</p>
                 <div style={{ display: type === "politician" ? "block" : "none" }}>
                     <p>Requested by: {service?.lobbyist?.username}</p>
@@ -64,10 +86,10 @@ export function Service(props) {
                 <div style={{ display: type === "lobbyist" ? "block" : "none" }}>
                     {service.politicians.length === 0
                         ? <p>So far no politician has accepted your offer.</p>
-                        :   <div>
-                                <p>These politicians have accepted your offer:</p>
-                                {renderPoliticians(service?.politicians)}
-                            </div>}
+                        : <div>
+                            <p>These politicians have accepted your offer:</p>
+                            {renderPoliticians(service?.politicians)}
+                        </div>}
                 </div>
                 <div style={{ display: type === "lobbyist" ? "block" : "none" }}>
                     <p>Politicians matching your request:</p>
@@ -77,37 +99,16 @@ export function Service(props) {
         )
     }
 
-    const deleteService = (event) => {
-        axios.delete(`${process.env.REACT_APP_URL}/services/${serviceId}`)
-            .then(() => {
-                navigate("/services")
-            })
-            .catch(err => {
-                console.log("An error has occurred while deleting a service:", err)
-            })
-    }
-
-    const acceptOffer = () => {
-        axios.put(`${process.env.REACT_APP_URL}/services/${serviceId}/accept-offer`, {politician: user._id})
-            .then(response => {
-                console.log("service after accepting offer:", response.data)
-                setService(response.data)
-            })
-            .catch(err => {
-                console.log("An error has occurred while accepting an offer:", err)
-            })
-    }
-
     return (
         <div>
             {renderService()}
-            <form style={{display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "block" : "none"}}>
+            <form style={{ display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "block" : "none" }}>
                 <button type="button" onClick={acceptOffer}>Accept Offer</button>
             </form>
-            <form style={{display: type === "lobbyist" ? "block" : "none"}}>
+            <form style={{ display: type === "lobbyist" ? "block" : "none" }}>
                 <button type="button" onClick={deleteService}>Delete Service</button>
             </form>
-            <NavLink to={`/services/form/${serviceId}`} style={{display: type === "lobbyist" ? "block" : "none"}}>
+            <NavLink to={`/services/form/${serviceId}`} style={{ display: type === "lobbyist" ? "block" : "none" }}>
                 <button>Edit</button>
             </NavLink>
             <NavLink to="/services">

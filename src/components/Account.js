@@ -8,9 +8,10 @@ export function Account(props) {
     const navigate = useNavigate()
     const {user, logOutUser} = useContext(AuthContext)
     const {_id, email, username, type, organization, position, party, areasOfInfluence} = user
+    const authToken = localStorage.getItem("authToken")
 
     const deleteAccount = (event) => {
-        axios.delete(`${process.env.REACT_APP_URL}/auth/user/${_id}`)
+        axios.delete(`${process.env.REACT_APP_URL}/auth/user/${_id}`, { headers: {Authorization: `Bearer ${authToken}`}})
             .then(() => {
                 logOutUser()
                 navigate("/")

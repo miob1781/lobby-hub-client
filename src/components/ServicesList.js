@@ -7,13 +7,14 @@ import axios from "axios";
 export function ServicesList(props){
     const {user} = useContext(AuthContext)
     const {_id, email, username, type, organization, position, party, areasOfInfluence} = user
-
+    const authToken = localStorage.getItem("authToken")
+    
     const [agreedServices, setAgreedServices] = useState(null)
     const [matchingServices, setMatchingServices] = useState(null)
     const [typeOfServices, setTypeOfServices] = useState("agreed")
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL}/services/${user?.type}/${user?._id}`)
+        axios.get(`${process.env.REACT_APP_URL}/services/${user?.type}/${user?._id}`, { headers: {Authorization: `Bearer ${authToken}`}})
             .then(res => {
                 console.log("services returned from db:", res.data)
                 setAgreedServices(res.data)
@@ -25,7 +26,7 @@ export function ServicesList(props){
 
     useEffect(() => {
         if (type === "politician"){
-            axios.post(`${process.env.REACT_APP_URL}/services/services-matching-keywords`, { areasOfInfluence })
+            axios.post(`${process.env.REACT_APP_URL}/services/services-matching-keywords`, { areasOfInfluence }, { headers: {Authorization: `Bearer ${authToken}`}})
             .then(response => {
                 setMatchingServices(response.data)
             })

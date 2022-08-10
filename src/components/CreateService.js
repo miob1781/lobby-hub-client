@@ -8,6 +8,7 @@ export function CreateService(props) {
     const { createOrId } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
+    const authToken = localStorage.getItem("authToken")
 
     const initialFormData = {
         title: "",
@@ -32,9 +33,8 @@ export function CreateService(props) {
 
     useEffect(() => {
         if (createOrId !== "create") {
-            axios.get(`${process.env.REACT_APP_URL}/services/${createOrId}`)
+            axios.get(`${process.env.REACT_APP_URL}/services/${createOrId}`, { headers: {Authorization: `Bearer ${authToken}`}})
                 .then(response => {
-                    console.log("service before update:", response.data)
                     setFormData(response.data)
                 })
                 .catch(err => {
@@ -44,11 +44,9 @@ export function CreateService(props) {
     }, [])
 
     const createService = (event) => {
-        console.log("service before creation:", formData)
         event.preventDefault()
-        axios.post(`${process.env.REACT_APP_URL}/services`, descriptionData)
+        axios.post(`${process.env.REACT_APP_URL}/services`, descriptionData, { headers: {Authorization: `Bearer ${authToken}`}})
             .then((res) => {
-                console.log("service after creation:", res.data)
                 setFormData(initialFormData)
                 navigate("/services")
             })
@@ -60,7 +58,7 @@ export function CreateService(props) {
 
     const updateService = (event) => {
         event.preventDefault()
-        axios.put(`${process.env.REACT_APP_URL}/services/${createOrId}`, descriptionData)
+        axios.put(`${process.env.REACT_APP_URL}/services/${createOrId}`, descriptionData, { headers: {Authorization: `Bearer ${authToken}`}})
             .then(() => {
                 setFormData(initialFormData)
                 navigate('/services')
