@@ -53,6 +53,7 @@ export function Service(props) {
             <div>
                 <h3>{service.title}</h3>
                 <p style={{display: type === "politician" && service?.politicians.find(pol => pol._id === user._id) ? "block" : "none"}}>You have accepted this offer.</p>
+                <p>Description: {service.description}</p>
                 <div style={{ display: type === "politician" ? "block" : "none" }}>
                     <p>Requested by: {service?.lobbyist?.username}</p>
                     <p>Organization: {service?.lobbyist?.organization}</p>

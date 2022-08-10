@@ -11,6 +11,7 @@ export function CreateService(props) {
 
     const initialFormData = {
         title: "",
+        description: "",
         financialOffer: 0,
         otherOffers: ""
     }
@@ -19,7 +20,7 @@ export function CreateService(props) {
     const [areasOfInfluence, setAreasOfInfluence] = useState([])
     const [errorMessage, setErrorMessage] = useState("");
 
-    const { title, financialOffer, otherOffers } = formData
+    const { title, description, financialOffer, otherOffers } = formData
 
     const handleInputChange = (target, category) => {
         setFormData(prevService => {
@@ -27,12 +28,13 @@ export function CreateService(props) {
         })
     }
 
-    const userData = { title, financialOffer, otherOffers, areasOfInfluence, lobbyist: user._id }
+    const descriptionData = { title, description, financialOffer, otherOffers, areasOfInfluence, lobbyist: user._id }
 
     useEffect(() => {
         if (createOrId !== "create") {
             axios.get(`${process.env.REACT_APP_URL}/services/${createOrId}`)
                 .then(response => {
+                    console.log("service before update:", response.data)
                     setFormData(response.data)
                 })
                 .catch(err => {
@@ -42,9 +44,11 @@ export function CreateService(props) {
     }, [])
 
     const createService = (event) => {
+        console.log("service before creation:", formData)
         event.preventDefault()
-        axios.post(`${process.env.REACT_APP_URL}/services`, userData)
+        axios.post(`${process.env.REACT_APP_URL}/services`, descriptionData)
             .then((res) => {
+                console.log("service after creation:", res.data)
                 setFormData(initialFormData)
                 navigate("/services")
             })
@@ -56,7 +60,7 @@ export function CreateService(props) {
 
     const updateService = (event) => {
         event.preventDefault()
-        axios.put(`${process.env.REACT_APP_URL}/services/${createOrId}`, userData)
+        axios.put(`${process.env.REACT_APP_URL}/services/${createOrId}`, descriptionData)
             .then(() => {
                 setFormData(initialFormData)
                 navigate('/services')
@@ -76,6 +80,15 @@ export function CreateService(props) {
                         type="text"
                         value={title}
                         onChange={({ target }) => handleInputChange(target, "title")}
+                        required
+                    /></label>
+                </div>
+                <div className="inputContainer">
+                    <label>Description: <textarea
+                        rows="5"
+                        cols="20"
+                        value={description}
+                        onChange={({ target }) => handleInputChange(target, "description")}
                         required
                     /></label>
                 </div>
