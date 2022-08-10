@@ -1,25 +1,92 @@
 .App {
-  text-align: center;
-  margin-top: 50px;
+    text-align: center;
+    height: 100%;
 }
 
 nav {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
 }
 
-.link button, form.link button {
-  background-color: burlywood;
-  color: white;
-  padding: 10px;
-  border: 1px solid grey;
-  border-radius: 3%;
-  margin: 0 5px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  cursor: pointer;
+.link button,
+form.link button {
+    background-color: burlywood;
+    color: white;
+    padding: 10px;
+    border: 2px solid grey;
+    border-radius: 3%;
+    box-shadow: 0 10px 15px 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
 }
 
 img {
-  width: 300px;
+    width: 300px;
+}
+
+.page {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 90vh;
+}
+
+.hero {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: black;
+    background-image: url("./images/hero-image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.overlay-hero {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 40%;
+    background-color: black;
+    z-index: 2;
+}
+
+.outer-container {
+    position: absolute;
+    margin-top: -15vh;
+    max-width: 300px;
+    z-index: 3;
+}
+
+.title-container {
+    color: white;
+    font-size: 1.6rem;
+}
+
+.inner-container {
+    padding: 2vw;
+    background-color: white;
+    z-index: 3;
+}
+
+.inner-hero {
+    position: absolute;
+    margin-top: -15vh;
+    padding: 2vw;
+    background-color: white;
+    z-index: 3;
+}
+
+.link.end-buttons {
+    margin-top: 30px;
+}
+
+.link.end-buttons button {
+    margin: 5px;
 }

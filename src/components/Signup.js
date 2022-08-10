@@ -5,25 +5,25 @@ import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 
 export function Signup(props) {
-    const {type} = useParams();
+    const { type } = useParams();
     const navigate = useNavigate();
-    const {user, storeToken, authenticateUser, setUser} = useContext(AuthContext);
+    const { user, storeToken, authenticateUser, setUser } = useContext(AuthContext);
 
     const [formData, setFormData] = useState(user);
     const [areasOfInfluence, setAreasOfInfluence] = useState([])
     const [errorMessage, setErrorMessage] = useState("");
 
-    const {_id, username, email, password, position, party, organization} = formData
+    const { _id, username, email, password, position, party, organization } = formData
     let userData
-    if (type === "lobbyist"){
-        userData = {username, email, password, type, organization}
+    if (type === "lobbyist") {
+        userData = { username, email, password, type, organization }
     } else {
-        userData = {username, email, password, type, position, party, areasOfInfluence}
+        userData = { username, email, password, type, position, party, areasOfInfluence }
     }
 
     const handleInputChange = (target, category) => {
         setFormData(prevUser => {
-            return {...prevUser, [category]: target.value}
+            return { ...prevUser, [category]: target.value }
         })
     }
 
@@ -57,65 +57,71 @@ export function Signup(props) {
             })
     }
 
-return (
-    <div>
-        <h2>{_id ? "Edit your user data" : "Signup"}</h2>
-        <form onSubmit={_id ? submitUpdate : submitSignup}>
-            <div className="inputContainer">
-                <label>Username: <input
-                    type="text"
-                    value={username}
-                    onChange={({target}) => handleInputChange(target, "username")}
-                    autoComplete="username"
-                    required
-                /></label>
+    return (
+        <div className="page">
+            <div className="overlay-hero"></div>
+            <div className="hero"></div>
+            <div className="inner-hero">
+                <h2>{_id ? "Edit your user data" : "Signup"}</h2>
+                <form onSubmit={_id ? submitUpdate : submitSignup}>
+                    <div className="inputContainer">
+                        <label>Username: <input
+                            type="text"
+                            value={username}
+                            onChange={({ target }) => handleInputChange(target, "username")}
+                            autoComplete="username"
+                            required
+                        /></label>
+                    </div>
+                    <div className="inputContainer">
+                        <label>Email: <input
+                            type="email"
+                            value={email}
+                            onChange={({ target }) => handleInputChange(target, "email")}
+                            required
+                        /></label>
+                    </div>
+                    <div className="inputContainer">
+                        <label>Password: <input
+                            type="password"
+                            value={password}
+                            onChange={({ target }) => handleInputChange(target, "password")}
+                            autoComplete={_id ? "current-password" : "new-password"}
+                            required
+                        /></label>
+                    </div>
+                    <div className="inputContainer" style={{ display: type === "lobbyist" ? "block" : "none" }}>
+                        <label>Organization: <input
+                            type="text"
+                            value={organization}
+                            onChange={({ target }) => handleInputChange(target, "organization")}
+                        /></label>
+                    </div>
+                    <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
+                        <label>Position: <input
+                            type="text"
+                            value={position}
+                            onChange={({ target }) => handleInputChange(target, "position")}
+                        /></label>
+                    </div>
+                    <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
+                        <label>Party: <input
+                            type="text"
+                            value={party}
+                            onChange={({ target }) => handleInputChange(target, "party")}
+                        /></label>
+                    </div>
+                    <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
+                        <KeywordsList setAreasOfInfluence={setAreasOfInfluence} />
+                    </div>
+                    <div className="link end-buttons">
+                        <button>{_id ? "Edit" : "Signup!"}</button>
+                        <NavLink to="/">
+                            <button type="button">Back</button>
+                        </NavLink>
+                    </div>
+                </form>
             </div>
-            <div className="inputContainer">
-                <label>Email: <input
-                    type="email"
-                    value={email}
-                    onChange={({target}) => handleInputChange(target, "email")}
-                    required
-                    /></label>
-            </div>
-            <div className="inputContainer">
-                <label>Password: <input
-                    type="password"
-                    value={password}
-                    onChange={({target}) => handleInputChange(target, "password")}
-                    autoComplete={_id ? "current-password" : "new-password"}
-                    required
-                /></label>
-            </div>
-            <div className="inputContainer" style={{ display: type === "lobbyist" ? "block" : "none" }}>
-                <label>Organization: <input
-                    type="text"
-                    value={organization}
-                    onChange={({ target }) => handleInputChange(target, "organization")}
-                /></label>
-            </div>
-            <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
-                <label>Position: <input
-                    type="text"
-                    value={position}
-                    onChange={({ target }) => handleInputChange(target, "position")}
-                /></label>
-            </div>
-            <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
-                <label>Party: <input
-                    type="text"
-                    value={party}
-                    onChange={({ target }) => handleInputChange(target, "party")}
-                /></label>
-            </div>
-            <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
-                <KeywordsList setAreasOfInfluence={setAreasOfInfluence} />
-            </div>
-            <button>{_id ? "Edit" : "Signup!"}</button>
-        </form>
-        <NavLink to="/">
-            <button type="button">Back</button>
-        </NavLink>
-    </div>
-)
+        </div>
+    )
 }

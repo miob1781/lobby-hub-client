@@ -11,10 +11,10 @@ export function Login(props) {
 
     const navigate = useNavigate();
 
-    const {storeToken, authenticateUser} = useContext(AuthContext)
+    const { storeToken, authenticateUser } = useContext(AuthContext)
 
-    const handleUsername = ({target}) => setUsername(target.value);
-    const handlePassword = ({target}) => setPassword(target.value);
+    const handleUsername = ({ target }) => setUsername(target.value);
+    const handlePassword = ({ target }) => setPassword(target.value);
 
     const handleLoginSubmit = (e) => {
         e.preventDefault();
@@ -34,42 +34,44 @@ export function Login(props) {
     };
 
     return (
-        <div className="LoginPage">
-            <h1>Login</h1>
+        <div className="page">
+            <div className="hero"></div>
+            <div className="overlay-hero"></div>
+            <div className="inner-hero">
+                <h2>Login</h2>
+                <form onSubmit={handleLoginSubmit}>
+                    <label>Username: </label>
+                    <input
+                        type="text"
+                        name="username"
+                        value={username}
+                        autoComplete="username"
+                        onChange={handleUsername}
+                    />
 
-            <form onSubmit={handleLoginSubmit}>
-                <label>Username: </label>
-                <input
-                    type="text"
-                    name="username"
-                    value={username}
-                    autoComplete="username"
-                    onChange={handleUsername}
-                />
+                    <label>Password:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={password}
+                        autoComplete="current-password"
+                        onChange={handlePassword}
+                    />
+                    <div className="link end-buttons">
+                        <button type="submit">Login</button>
+                    </div>
+                </form>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-                <label>Password:</label>
-                <input
-                    type="password"
-                    name="password"
-                    value={password}
-                    autoComplete="current-password"
-                    onChange={handlePassword}
-                />
-
-                <button type="submit">Login</button>
-            </form>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-            <p>Don't have an account yet?</p>
-            <div>
-                <NavLink to="/signup/lobbyist">
-                    <button>Register as lobbyist.</button>
-                </NavLink>
-            </div>
-            <div>
-                <NavLink to="/signup/politician">
-                    <button>Register as politician.</button>
-                </NavLink>
+                <p>Don't have an account yet?</p>
+                <div className="link end-buttons">
+                    <NavLink to="/signup/lobbyist">
+                        <button>Register as lobbyist</button>
+                    </NavLink>
+                    <NavLink to="/signup/politician">
+                        <button>Register as politician</button>
+                    </NavLink>
+                </div>
             </div>
         </div>
     )
