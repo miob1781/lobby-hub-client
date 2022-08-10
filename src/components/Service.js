@@ -16,7 +16,6 @@ export function Service(props) {
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_URL}/services/${serviceId}`)
             .then(res => {
-                console.log("service after GET /services/:serviceId:", res.data)
                 setService(res.data)
             })
             .catch(err => {
@@ -53,6 +52,7 @@ export function Service(props) {
         return (
             <div>
                 <h3>{service.title}</h3>
+                <p style={{display: type === "politician" && service?.politicians.find(pol => pol._id === user._id) ? "block" : "none"}}>You have accepted this offer.</p>
                 <div style={{ display: type === "politician" ? "block" : "none" }}>
                     <p>Requested by: {service?.lobbyist?.username}</p>
                     <p>Organization: {service?.lobbyist?.organization}</p>
@@ -87,9 +87,10 @@ export function Service(props) {
     }
 
     const acceptOffer = () => {
-        axios.put(`${process.env.REACT_APP_URL}/services/${serviceId}`, {...service, politicians: [user._id]})
+        axios.put(`${process.env.REACT_APP_URL}/services/${serviceId}/accept-offer`, {politician: user._id})
             .then(response => {
-                setService(prevService => ({...service, politicians: [...service.politicians, user]}))
+                console.log("service after accepting offer:", response.data)
+                setService(response.data)
             })
             .catch(err => {
                 console.log("An error has occurred while accepting an offer:", err)
@@ -99,13 +100,13 @@ export function Service(props) {
     return (
         <div>
             {renderService()}
-            <form style={{display: type === "politician" ? "block" : "none"}}>
+            <form style={{display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "block" : "none"}}>
                 <button type="button" onClick={acceptOffer}>Accept Offer</button>
             </form>
-            <form>
+            <form style={{display: type === "lobbyist" ? "block" : "none"}}>
                 <button type="button" onClick={deleteService}>Delete Service</button>
             </form>
-            <NavLink to={`/services/form/${serviceId}`}>
+            <NavLink to={`/services/form/${serviceId}`} style={{display: type === "lobbyist" ? "block" : "none"}}>
                 <button>Edit</button>
             </NavLink>
             <NavLink to="/services">

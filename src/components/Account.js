@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
-import { ServicesSnippet } from "./ServicesSnippet";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 
@@ -40,7 +39,6 @@ export function Account(props) {
             <NavLink to="/services">
                 <button>Services</button>
             </NavLink>
-            <ServicesSnippet />
         </div>
     )
 }

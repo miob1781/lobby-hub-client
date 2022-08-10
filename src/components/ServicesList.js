@@ -13,8 +13,6 @@ export function ServicesList(props){
     const [typeOfServices, setTypeOfServices] = useState("agreed")
 
     useEffect(() => {
-        
-        console.log("..................................", user?.type, user?._id)
         axios.get(`${process.env.REACT_APP_URL}/services/${user?.type}/${user?._id}`)
             .then(res => {
                 setAgreedServices(res.data)
