@@ -14,18 +14,18 @@ export function CreateService(props) {
         title: "",
         description: "",
         financialOffer: 0,
-        otherOffers: ""
+        otherOffers: "",
+        areasOfInfluence: []
     }
 
     const [formData, setFormData] = useState(initialFormData);
-    const [areasOfInfluence, setAreasOfInfluence] = useState([])
     const [errorMessage, setErrorMessage] = useState("");
 
-    const { title, description, financialOffer, otherOffers } = formData
+    const { title, description, financialOffer, otherOffers, areasOfInfluence } = formData
 
     const handleInputChange = (target, category) => {
-        setFormData(prevService => {
-            return { ...prevService, [category]: target.value }
+        setFormData(prevFormData => {
+            return { ...prevFormData, [category]: target.value }
         })
     }
 
@@ -34,9 +34,8 @@ export function CreateService(props) {
     useEffect(() => {
         if (createOrId !== "create") {
             axios.get(`${process.env.REACT_APP_URL}/services/${createOrId}`, { headers: { Authorization: `Bearer ${authToken}` } })
-                .then(response => {
-                    setFormData(response.data)
-                })
+                .then(({data}) => {
+                    setFormData(data)                })
                 .catch(err => {
                     console.log("An error has occurred while loading service:", err)
                 })
@@ -109,7 +108,9 @@ export function CreateService(props) {
                         /></label>
                     </div>
                     <div className="inputContainer">
-                        <KeywordsList setAreasOfInfluence={setAreasOfInfluence} />
+                        {areasOfInfluence.length > 0 &&
+                        <KeywordsList areasOfInfluence={areasOfInfluence} setFormData={setFormData} />
+                        }
                     </div>
                     <div className="link end-buttons">
                         <button>{createOrId !== "create" ? "Edit" : "Create"}</button>

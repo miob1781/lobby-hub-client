@@ -11,10 +11,9 @@ export function Signup(props) {
     const authToken = localStorage.getItem("authToken")
 
     const [formData, setFormData] = useState(user);
-    const [areasOfInfluence, setAreasOfInfluence] = useState([])
     const [errorMessage, setErrorMessage] = useState("");
 
-    const { _id, username, email, password, position, party, organization } = formData
+    const { _id, username, email, password, position, party, organization, areasOfInfluence } = formData
     let userData
     if (type === "lobbyist") {
         userData = { username, email, password, type, organization }
@@ -31,8 +30,8 @@ export function Signup(props) {
     const submitSignup = (event) => {
         event.preventDefault()
         axios.post(`${process.env.REACT_APP_URL}/auth/signup`, userData)
-            .then((res) => {
-                storeToken(res.data.authToken)
+            .then((response) => {
+                storeToken(response.data.authToken)
                 authenticateUser()
             })
             .then(() => {
@@ -47,9 +46,9 @@ export function Signup(props) {
     const submitUpdate = (event) => {
         event.preventDefault()
         axios.put(`${process.env.REACT_APP_URL}/auth/user/${_id}`, userData, {headers: {Authorization: `Bearer ${authToken}`}})
-            .then((res) => {
-                setUser(res.data)
-                setFormData(res.data)
+            .then(({data}) => {
+                setUser(data)
+                setFormData(data)
                 navigate('/')
             })
             .catch((error) => {
@@ -113,7 +112,8 @@ export function Signup(props) {
                         /></label>
                     </div>
                     <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
-                        <KeywordsList setAreasOfInfluence={setAreasOfInfluence} />
+                        {areasOfInfluence.length > 0 &&
+                        <KeywordsList areasOfInfluence={areasOfInfluence} setFormData={setFormData} />}
                     </div>
                     <div className="link end-buttons">
                         <button>{_id ? "Edit" : "Signup!"}</button>
