@@ -110,7 +110,7 @@ export function Service(props) {
                 <button type="button" onClick={acceptOffer}>Accept Offer</button>
             </form>
             <form style={{ display: type === "lobbyist" ? "inline-block" : "none" }} className="link end-buttons">
-                <button type="button" onClick={deleteService}>Delete</button>
+                <button type="button" className="delete" onClick={deleteService}>Delete</button>
             </form>
             <NavLink to={`/services/form/${serviceId}`} style={{ display: type === "lobbyist" ? "inline-block" : "none" }} className="link end-buttons">
                 <button>Edit</button>

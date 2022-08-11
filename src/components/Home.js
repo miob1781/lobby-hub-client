@@ -10,16 +10,16 @@ export function Home(props) {
                     <h1>Welcome to LobbyHub!</h1>
                 </div>
                 <div className="inner-container">
-                    <div className="element-container">
+                    <div id="signup-lobbyist">
                         <p>I want to buy political services.</p>
                         <NavLink to="/signup/lobbyist" className="link">
-                            <button>Register as lobbyist</button>
+                            <button className="auth">Register as lobbyist</button>
                         </NavLink>
                     </div>
-                    <div className="element-container">
+                    <div>
                         <p>I want to sell political services.</p>
                         <NavLink to="/signup/politician" className="link">
-                            <button>Register as politician</button>
+                            <button className="auth">Register as politician</button>
                         </NavLink>
                     </div>
                 </div>

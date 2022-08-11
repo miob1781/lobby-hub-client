@@ -50,7 +50,7 @@ export function ServicesList(props){
                 <h3>{service.title}</h3>
                 <p>Financial benefits: {service.financialOffer} $</p>
                 <p>Other benefits: {service.otherOffers}</p>
-                <NavLink to={`/services/${service._id}`} className="link end-buttons"><button>Show Details</button></NavLink>
+                <NavLink to={`/services/${service._id}`} className="link end-buttons"><button className="details">Show Details</button></NavLink>
             </div>
         ))
     }

@@ -58,7 +58,7 @@ export function Login(props) {
                         onChange={handlePassword}
                     />
                     <div className="link end-buttons">
-                        <button type="submit">Login</button>
+                        <button type="submit" className="auth">Login</button>
                     </div>
                 </form>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -66,10 +66,10 @@ export function Login(props) {
                 <p>Don't have an account yet?</p>
                 <div className="link end-buttons">
                     <NavLink to="/signup/lobbyist">
-                        <button>Register as lobbyist</button>
+                        <button className="auth">Register as lobbyist</button>
                     </NavLink>
                     <NavLink to="/signup/politician">
-                        <button>Register as politician</button>
+                        <button className="auth">Register as politician</button>
                     </NavLink>
                 </div>
             </div>

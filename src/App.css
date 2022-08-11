@@ -70,9 +70,23 @@ img {
 }
 
 .inner-container {
+    min-height: 260px;
     padding: 2vw;
     background-color: white;
     z-index: 3;
+}
+
+.inner-container p {
+    font-size: 1.1rem;   
+}
+
+.link .auth {
+    background-color: turquoise;
+    font-weight: 600;
+}
+
+#signup-lobbyist {
+    padding-bottom: 30px;
 }
 
 .inner-hero {
@@ -90,6 +104,14 @@ img {
 
 .link.end-buttons button {
     margin: 5px;
+}
+
+.link.end-buttons .delete {
+    background-color: red;
+}
+
+.link.end-buttons .details {
+    background-color: darkcyan;
 }
 
 .card-container {

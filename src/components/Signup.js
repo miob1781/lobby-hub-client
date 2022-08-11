@@ -116,7 +116,7 @@ export function Signup(props) {
                         <KeywordsList areasOfInfluence={areasOfInfluence} setFormData={setFormData} />}
                     </div>
                     <div className="link end-buttons">
-                        <button>{_id ? "Edit" : "Signup!"}</button>
+                        <button className="auth">{_id ? "Edit" : "Signup!"}</button>
                         <NavLink to="/">
                             <button type="button">Back</button>
                         </NavLink>
