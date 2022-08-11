@@ -18,8 +18,8 @@ form.link button {
     border: 2px solid grey;
     border-radius: 3%;
     box-shadow: 0 10px 15px 0;
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: 500;
+    font-size: 1.05rem;
     cursor: pointer;
 }
 
