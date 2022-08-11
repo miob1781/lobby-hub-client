@@ -106,13 +106,13 @@ export function Service(props) {
     return (
         <div>
             {renderService()}
-            <form style={{ display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "block" : "none" }} className="link end-buttons">
+            <form style={{ display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "inline-block" : "none" }} className="link end-buttons">
                 <button type="button" onClick={acceptOffer}>Accept Offer</button>
             </form>
-            <form style={{ display: type === "lobbyist" ? "block" : "none" }} className="link end-buttons">
-                <button type="button" onClick={deleteService}>Delete Service</button>
+            <form style={{ display: type === "lobbyist" ? "inline-block" : "none" }} className="link end-buttons">
+                <button type="button" onClick={deleteService}>Delete</button>
             </form>
-            <NavLink to={`/services/form/${serviceId}`} style={{ display: type === "lobbyist" ? "block" : "none" }} className="link end-buttons">
+            <NavLink to={`/services/form/${serviceId}`} style={{ display: type === "lobbyist" ? "inline-block" : "none" }} className="link end-buttons">
                 <button>Edit</button>
             </NavLink>
             <NavLink to="/services" className="link end-buttons">

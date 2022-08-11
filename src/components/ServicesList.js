@@ -48,9 +48,9 @@ export function ServicesList(props){
         return services?.map(service => (
             <div key={service._id} className="card">
                 <h3>{service.title}</h3>
-                <p>Financial benefits: {service.financialOffers}</p>
+                <p>Financial benefits: {service.financialOffer} $</p>
                 <p>Other benefits: {service.otherOffers}</p>
-                <NavLink to={`/services/${service._id}`} className="link end-buttons"><button>See Details</button></NavLink>
+                <NavLink to={`/services/${service._id}`} className="link end-buttons"><button>Show Details</button></NavLink>
             </div>
         ))
     }

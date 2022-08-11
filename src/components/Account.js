@@ -4,7 +4,7 @@ import { AuthContext } from "../context/auth.context";
 
 export function Account(props) {
     const { renderAreasOfInfluence } = props
-    const { user, logOutUser } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const { email, username, type, organization, position, party, areasOfInfluence } = user
 
     return (
