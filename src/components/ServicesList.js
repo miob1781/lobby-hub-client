@@ -1,12 +1,11 @@
 import {useState, useEffect, useContext} from "react";
-import {NavLink, useParams} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {AuthContext} from "../context/auth.context";
-import {CreateService} from "./CreateService";
 import axios from "axios";
 
 export function ServicesList(props){
     const {user} = useContext(AuthContext)
-    const {_id, email, username, type, organization, position, party, areasOfInfluence} = user
+    const {type, areasOfInfluence} = user
     const authToken = localStorage.getItem("authToken")
     
     const [agreedServices, setAgreedServices] = useState(null)
@@ -16,7 +15,6 @@ export function ServicesList(props){
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_URL}/services/${user?.type}/${user?._id}`, { headers: {Authorization: `Bearer ${authToken}`}})
             .then(res => {
-                console.log("services returned from db:", res.data)
                 setAgreedServices(res.data)
             })
             .catch(err => {

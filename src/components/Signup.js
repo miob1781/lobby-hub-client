@@ -8,6 +8,7 @@ export function Signup(props) {
     const { type } = useParams();
     const navigate = useNavigate();
     const { user, storeToken, authenticateUser, setUser } = useContext(AuthContext);
+    const authToken = localStorage.getItem("authToken")
 
     const [formData, setFormData] = useState(user);
     const [areasOfInfluence, setAreasOfInfluence] = useState([])
@@ -45,7 +46,7 @@ export function Signup(props) {
 
     const submitUpdate = (event) => {
         event.preventDefault()
-        axios.put(`${process.env.REACT_APP_URL}/auth/user/${_id}`, userData)
+        axios.put(`${process.env.REACT_APP_URL}/auth/user/${_id}`, userData, {headers: {Authorization: `Bearer ${authToken}`}})
             .then((res) => {
                 setUser(res.data)
                 setFormData(res.data)
