@@ -33,7 +33,7 @@ export function CreateService(props) {
 
     useEffect(() => {
         if (createOrId !== "create") {
-            axios.get(`${process.env.REACT_APP_URL}/services/${createOrId}`, { headers: {Authorization: `Bearer ${authToken}`}})
+            axios.get(`${process.env.REACT_APP_URL}/services/${createOrId}`, { headers: { Authorization: `Bearer ${authToken}` } })
                 .then(response => {
                     setFormData(response.data)
                 })
@@ -45,8 +45,8 @@ export function CreateService(props) {
 
     const createService = (event) => {
         event.preventDefault()
-        axios.post(`${process.env.REACT_APP_URL}/services`, descriptionData, { headers: {Authorization: `Bearer ${authToken}`}})
-            .then((res) => {
+        axios.post(`${process.env.REACT_APP_URL}/services`, descriptionData, { headers: { Authorization: `Bearer ${authToken}` } })
+            .then(() => {
                 setFormData(initialFormData)
                 navigate("/services")
             })
@@ -58,7 +58,7 @@ export function CreateService(props) {
 
     const updateService = (event) => {
         event.preventDefault()
-        axios.put(`${process.env.REACT_APP_URL}/services/${createOrId}`, descriptionData, { headers: {Authorization: `Bearer ${authToken}`}})
+        axios.put(`${process.env.REACT_APP_URL}/services/${createOrId}`, descriptionData, { headers: { Authorization: `Bearer ${authToken}` } })
             .then(() => {
                 setFormData(initialFormData)
                 navigate('/services')
@@ -70,49 +70,55 @@ export function CreateService(props) {
     }
 
     return (
-        <div>
-            <h2>{createOrId !== "create" ? "Edit" : "Create"} Service</h2>
-            <form onSubmit={createOrId !== "create" ? updateService : createService}>
-                <div className="inputContainer">
-                    <label>Title: <input
-                        type="text"
-                        value={title}
-                        onChange={({ target }) => handleInputChange(target, "title")}
-                        required
-                    /></label>
-                </div>
-                <div className="inputContainer">
-                    <label>Description: <textarea
-                        rows="5"
-                        cols="20"
-                        value={description}
-                        onChange={({ target }) => handleInputChange(target, "description")}
-                        required
-                    /></label>
-                </div>
-                <div className="inputContainer">
-                    <label>Financial Benefits: <input
-                        type="number"
-                        value={financialOffer}
-                        onChange={({ target }) => handleInputChange(target, "financialOffer")}
-                        required
-                    /></label>
-                </div>
-                <div className="inputContainer">
-                    <label>Other benefits: <input
-                        type="text"
-                        value={otherOffers}
-                        onChange={({ target }) => handleInputChange(target, "otherOffers")}
-                    /></label>
-                </div>
-                <div className="inputContainer">
-                    <KeywordsList setAreasOfInfluence={setAreasOfInfluence} />
-                </div>
-                <button>{createOrId !== "create" ? "Edit" : "Create"}</button>
-            </form>
-            <NavLink to="/">
-                <button type="button">Back</button>
-            </NavLink>
+        <div className="page">
+            <div className="hero"></div>
+            <div className="overlay-hero"></div>
+            <div className="inner-hero">
+                <h2>{createOrId !== "create" ? "Edit" : "Create"} Service</h2>
+                <form onSubmit={createOrId !== "create" ? updateService : createService}>
+                    <div className="inputContainer">
+                        <label>Title: <input
+                            type="text"
+                            value={title}
+                            onChange={({ target }) => handleInputChange(target, "title")}
+                            required
+                        /></label>
+                    </div>
+                    <div className="inputContainer">
+                        <label>Description: <textarea
+                            rows="5"
+                            cols="20"
+                            value={description}
+                            onChange={({ target }) => handleInputChange(target, "description")}
+                            required
+                        /></label>
+                    </div>
+                    <div className="inputContainer">
+                        <label>Financial Benefits: <input
+                            type="number"
+                            value={financialOffer}
+                            onChange={({ target }) => handleInputChange(target, "financialOffer")}
+                            required
+                        /></label>
+                    </div>
+                    <div className="inputContainer">
+                        <label>Other benefits: <input
+                            type="text"
+                            value={otherOffers}
+                            onChange={({ target }) => handleInputChange(target, "otherOffers")}
+                        /></label>
+                    </div>
+                    <div className="inputContainer">
+                        <KeywordsList setAreasOfInfluence={setAreasOfInfluence} />
+                    </div>
+                    <div className="link end-buttons">
+                        <button>{createOrId !== "create" ? "Edit" : "Create"}</button>
+                    </div>
+                    <NavLink to="/" className="link end-buttons">
+                        <button type="button">Back</button>
+                    </NavLink>
+                </form>
+            </div>
         </div>
     )
 }

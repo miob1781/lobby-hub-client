@@ -48,10 +48,11 @@ export function ServicesList(props){
             return <p>There are no offers matching your areas of influence at the moment.</p>
         } 
         return services?.map(service => (
-            <div key={service._id}>
+            <div key={service._id} className="card">
                 <h3>{service.title}</h3>
-                <NavLink to={`/services/${service._id}`}><button>See Details</button></NavLink>
-                <hr />
+                <p>Financial benefits: {service.financialOffers}</p>
+                <p>Other benefits: {service.otherOffers}</p>
+                <NavLink to={`/services/${service._id}`} className="link end-buttons"><button>See Details</button></NavLink>
             </div>
         ))
     }
@@ -59,12 +60,14 @@ export function ServicesList(props){
     return (
         <div>
             <h2>Services</h2>
-            <NavLink to="/services/form/create" style={{display: type === "lobbyist" ? "block" : "none"}}><button>New Service</button></NavLink>
-            <div style={{display: type === "politician" ? "block" : "none"}}>
+            <NavLink to="/services/form/create" style={{display: type === "lobbyist" ? "block" : "none"}} className="link end-buttons"><button>New Service</button></NavLink>
+            <div style={{display: type === "politician" ? "block" : "none"}} className="link end-buttons">
                 <button type="button" onClick={() => setTypeOfServices("matching")}>Services matching your keywords</button>
                 <button type="button" onClick={() => setTypeOfServices("agreed")}>Services you agreed on</button>
             </div>
-            {renderServices()}
+            <div className="card-container">
+                {renderServices()}
+            </div>
         </div>
     )
 }

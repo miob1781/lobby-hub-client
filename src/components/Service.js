@@ -58,7 +58,7 @@ export function Service(props) {
 
     const renderPoliticians = politicians => {
         return politicians?.map(politician => (
-            <article key={politician?._id}>
+            <article key={politician?._id} className="card">
                 <p>Name: {politician?.username}</p>
                 <p>Email: {politician?.email}</p>
                 <p>Position: {politician?.position}</p>
@@ -88,12 +88,16 @@ export function Service(props) {
                         ? <p>So far no politician has accepted your offer.</p>
                         : <div>
                             <p>These politicians have accepted your offer:</p>
-                            {renderPoliticians(service?.politicians)}
+                            <div className="card-container">
+                                {renderPoliticians(service?.politicians)}
+                            </div>
                         </div>}
                 </div>
                 <div style={{ display: type === "lobbyist" ? "block" : "none" }}>
                     <p>Politicians matching your request:</p>
-                    {renderPoliticians(matchingPoliticians)}
+                    <div className="card-container">
+                        {renderPoliticians(matchingPoliticians)}
+                    </div>
                 </div>
             </div>
         )
@@ -102,16 +106,16 @@ export function Service(props) {
     return (
         <div>
             {renderService()}
-            <form style={{ display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "block" : "none" }}>
+            <form style={{ display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "block" : "none" }} className="link end-buttons">
                 <button type="button" onClick={acceptOffer}>Accept Offer</button>
             </form>
-            <form style={{ display: type === "lobbyist" ? "block" : "none" }}>
+            <form style={{ display: type === "lobbyist" ? "block" : "none" }} className="link end-buttons">
                 <button type="button" onClick={deleteService}>Delete Service</button>
             </form>
-            <NavLink to={`/services/form/${serviceId}`} style={{ display: type === "lobbyist" ? "block" : "none" }}>
+            <NavLink to={`/services/form/${serviceId}`} style={{ display: type === "lobbyist" ? "block" : "none" }} className="link end-buttons">
                 <button>Edit</button>
             </NavLink>
-            <NavLink to="/services">
+            <NavLink to="/services" className="link end-buttons">
                 <button>Back</button>
             </NavLink>
         </div>
