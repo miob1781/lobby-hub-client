@@ -112,7 +112,7 @@ export function Signup(props) {
                         /></label>
                     </div>
                     <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
-                        {type === "politician" && areasOfInfluence.length > 0 &&
+                        {type === "politician" && (areasOfInfluence.length > 0 || !_id) &&
                         <KeywordsList areasOfInfluence={areasOfInfluence} setFormData={setFormData} />}
                     </div>
                     <div className="link end-buttons">
