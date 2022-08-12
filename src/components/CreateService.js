@@ -108,7 +108,7 @@ export function CreateService(props) {
                         /></label>
                     </div>
                     <div className="inputContainer">
-                        {areasOfInfluence.length > 0 &&
+                        {(areasOfInfluence.length > 0 || createOrId === "create") &&
                         <KeywordsList areasOfInfluence={areasOfInfluence} setFormData={setFormData} />
                         }
                     </div>
