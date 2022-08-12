@@ -61,7 +61,7 @@ export function Signup(props) {
         <div className="page">
             <div className="overlay-hero"></div>
             <div className="hero"></div>
-            <div className="inner-hero">
+            <div className="inner-hero down">
                 <h2>{_id ? "Edit your user data" : "Signup"}</h2>
                 <form onSubmit={_id ? submitUpdate : submitSignup}>
                     <div className="inputContainer">

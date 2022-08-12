@@ -29,9 +29,11 @@ img {
 
 .page {
     display: flex;
+    flex-direction: column;
     position: relative;
     justify-content: center;
     align-items: center;
+    margin: auto 0;
     width: 100vw;
     height: 90vh;
 }
@@ -126,4 +128,16 @@ img {
     background-color: turquoise;
     color: white;
     margin: 5px;
+}
+
+@media screen and (max-width: 500px) {
+    .inner-hero.down {
+        position: relative;
+        top: 150px;
+    }
+
+    .inner-hero.more-down {
+        position: relative;
+        top: 150px;
+    }
 }

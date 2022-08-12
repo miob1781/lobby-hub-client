@@ -72,7 +72,7 @@ export function CreateService(props) {
         <div className="page">
             <div className="hero"></div>
             <div className="overlay-hero"></div>
-            <div className="inner-hero">
+            <div className="inner-hero down">
                 <h2>{createOrId !== "create" ? "Edit" : "Create"} Service</h2>
                 <form onSubmit={createOrId !== "create" ? updateService : createService}>
                     <div className="inputContainer">
@@ -113,7 +113,7 @@ export function CreateService(props) {
                         }
                     </div>
                     <div className="link end-buttons">
-                        <button>{createOrId !== "create" ? "Edit" : "Create"}</button>
+                        <button className="auth">{createOrId !== "create" ? "Edit" : "Create"}</button>
                     </div>
                     <NavLink to="/" className="link end-buttons">
                         <button type="button">Back</button>
