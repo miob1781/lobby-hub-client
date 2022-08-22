@@ -19,4 +19,4 @@ This is the repository for the frontend. Go to the repository for the backend [h
 
 ## Demo
 
-See the demo [here](lobby-hub.netlify.app).
+See the demo [here](https://lobby-hub.netlify.app/).
