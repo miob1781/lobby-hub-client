@@ -1,7 +1,9 @@
-import { useState, useEffect, useContext } from "react";
-import { NavLink, useParams, useNavigate } from "react-router-dom";
-import { KeywordsList } from "./KeywordsList";
+import { useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Container, Row, Col, Card, Form, Button } from "react-bootstrap"
+import { LinkContainer } from "react-router-bootstrap"
 import axios from "axios";
+import { KeywordsList } from "./KeywordsList";
 import { AuthContext } from "../context/auth.context";
 
 export function Signup(props) {
@@ -45,8 +47,8 @@ export function Signup(props) {
 
     const submitUpdate = (event) => {
         event.preventDefault()
-        axios.put(`${process.env.REACT_APP_URL}/auth/user/${_id}`, userData, {headers: {Authorization: `Bearer ${authToken}`}})
-            .then(({data}) => {
+        axios.put(`${process.env.REACT_APP_URL}/auth/user/${_id}`, userData, { headers: { Authorization: `Bearer ${authToken}` } })
+            .then(({ data }) => {
                 setUser(data)
                 setFormData(data)
                 navigate('/')
@@ -58,71 +60,101 @@ export function Signup(props) {
     }
 
     return (
-        <div className="page">
+        <Container className="d-flex justify-content-center">
             <div className="overlay-hero"></div>
             <div className="hero"></div>
-            <div className="inner-hero down">
-                <h2>{_id ? "Edit your user data" : "Signup"}</h2>
-                <form onSubmit={_id ? submitUpdate : submitSignup}>
-                    <div className="inputContainer">
-                        <label>Username: <input
-                            type="text"
-                            value={username}
-                            onChange={({ target }) => handleInputChange(target, "username")}
-                            autoComplete="username"
-                            required
-                        /></label>
-                    </div>
-                    <div className="inputContainer">
-                        <label>Email: <input
-                            type="email"
-                            value={email}
-                            onChange={({ target }) => handleInputChange(target, "email")}
-                            required
-                        /></label>
-                    </div>
-                    <div className="inputContainer">
-                        <label>Password: <input
-                            type="password"
-                            value={password}
-                            onChange={({ target }) => handleInputChange(target, "password")}
-                            autoComplete={_id ? "current-password" : "new-password"}
-                            required
-                        /></label>
-                    </div>
-                    <div className="inputContainer" style={{ display: type === "lobbyist" ? "block" : "none" }}>
-                        <label>Organization: <input
-                            type="text"
-                            value={organization}
-                            onChange={({ target }) => handleInputChange(target, "organization")}
-                        /></label>
-                    </div>
-                    <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
-                        <label>Position: <input
-                            type="text"
-                            value={position}
-                            onChange={({ target }) => handleInputChange(target, "position")}
-                        /></label>
-                    </div>
-                    <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
-                        <label>Party: <input
-                            type="text"
-                            value={party}
-                            onChange={({ target }) => handleInputChange(target, "party")}
-                        /></label>
-                    </div>
-                    <div className="inputContainer" style={{ display: type === "politician" ? "block" : "none" }}>
+            <Card body style={{ zIndex: "3", width: "min(300px, 80vw)", marginTop: "5vw" }}>
+                <div className="mb-3 mt-3">
+                    <Card.Title>{_id ? "Edit your user data" : "Signup"}</Card.Title>
+                </div>
+                <Form onSubmit={_id ? submitUpdate : submitSignup}>
+                    <Row className="mb-3">
+                        <Form.Label column="md" htmlFor="username">Username:</Form.Label>
+                        <Col xs="7">
+                            <Form.Control
+                                type="text"
+                                id="username"
+                                value={username}
+                                onChange={({ target }) => handleInputChange(target, "username")}
+                                autoComplete="username"
+                                required
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="mb-3">
+                        <Form.Label column="md" htmlFor="email">Email:</Form.Label>
+                        <Col xs="7">
+                            <Form.Control
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={({ target }) => handleInputChange(target, "email")}
+                                required
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="mb-3">
+                        <Form.Label column="md" htmlFor="password">Password:</Form.Label>
+                        <Col xs="7">
+                            <Form.Control
+                                type="password"
+                                id="password"
+                                value={password}
+                                onChange={({ target }) => handleInputChange(target, "password")}
+                                autoComplete={_id ? "current-password" : "new-password"}
+                                required
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="mb-3" style={{ display: type === "lobbyist" ? "flex" : "none" }}>
+                        <Form.Label column="md" htmlFor="organization">Organization:</Form.Label>
+                        <Col xs="7">
+                            <Form.Control
+                                type="text"
+                                id="organization"
+                                value={organization}
+                                onChange={({ target }) => handleInputChange(target, "organization")}
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="mb-3" style={{ display: type === "politician" ? "flex" : "none" }}>
+                        <Form.Label column="md" htmlFor="position">Position:</Form.Label>
+                        <Col xs="7">
+                            <Form.Control
+                                type="text"
+                                id="position"
+                                value={position}
+                                onChange={({ target }) => handleInputChange(target, "position")}
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="mb-3" style={{ display: type === "politician" ? "flex" : "none" }}>
+                        <Form.Label column="md" htmlFor="party">Party:</Form.Label>
+                        <Col xs="7">
+                            <Form.Control
+                                type="text"
+                                id="party"
+                                value={party}
+                                onChange={({ target }) => handleInputChange(target, "party")}
+                            />
+                        </Col>
+                    </Row>
+                    <div className="mb-3" style={{ display: type === "politician" ? "flex" : "none" }}>
                         {type === "politician" && (areasOfInfluence.length > 0 || !_id) &&
-                        <KeywordsList areasOfInfluence={areasOfInfluence} setFormData={setFormData} />}
+                            <KeywordsList areasOfInfluence={areasOfInfluence} setFormData={setFormData} />}
                     </div>
-                    <div className="link end-buttons">
-                        <button className="auth">{_id ? "Edit" : "Signup!"}</button>
-                        <NavLink to="/">
-                            <button type="button">Back</button>
-                        </NavLink>
-                    </div>
-                </form>
-            </div>
-        </div>
+                    <Row className="mb-3 mt-4 justify-content-center">
+                        <Col xs="4">
+                            <Button>{_id ? "Edit" : "Signup!"}</Button>
+                        </Col>
+                        <Col xs="4">
+                            <LinkContainer to="/">
+                                <Button type="button">Back</Button>
+                            </LinkContainer>
+                        </Col>
+                    </Row>
+                </Form>
+            </Card>
+        </Container>
     )
 }

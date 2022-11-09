@@ -3,7 +3,7 @@
     height: 100%;
 }
 
-nav {
+/* nav {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,11 +21,7 @@ form.link button {
     font-weight: 500;
     font-size: 1.05rem;
     cursor: pointer;
-}
-
-img {
-    width: 300px;
-}
+} */
 
 .page {
     display: flex;
@@ -88,10 +84,10 @@ img {
     font-size: 1.1rem;   
 }
 
-.link .auth {
+/* .link .auth {
     background-color: turquoise;
     font-weight: 600;
-}
+} */
 
 #signup-lobbyist {
     padding-bottom: 30px;
@@ -99,7 +95,7 @@ img {
     border-bottom: 1.5px solid grey;
 }
 
-.inner-hero {
+/* .inner-hero {
     position: absolute;
     padding: 2vw;
     margin: 0 50px;
@@ -129,18 +125,23 @@ img {
     justify-content: center;
     flex-wrap: wrap;
     margin: 0 10px
-}
+} */
 
-.card {
+/* .card {
     width: 300px;
     background-color: turquoise;
     color: white;
     margin: 5px;
-}
+} */
 
+/* .bootstrap-card {
+    width: min(350px, 80vw);
+    z-index: 3;
+} */
+/* 
 @media screen and (max-width: 500px) {
     .inner-hero.down {
         position: relative;
         top: 150px;
     }
-}
+} */
