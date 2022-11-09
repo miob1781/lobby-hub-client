@@ -1,3 +1,5 @@
+import { Form } from "react-bootstrap"
+
 const keywords = [
     "agriculture",
     "care",
@@ -21,36 +23,40 @@ const keywords = [
 export function KeywordsList(props) {
     const { areasOfInfluence, setFormData } = props;
 
-    const handleCheckboxInput = ({target}) => {
+    const handleCheckboxInput = ({ target }) => {
         setFormData(prevData => {
-            const copy = {...prevData}
+            const copy = { ...prevData }
             let keywordsArr = copy.areasOfInfluence
             if (keywordsArr.includes(target.value)) {
                 keywordsArr = keywordsArr.filter(el => el !== target.value)
             } else {
                 keywordsArr = [...keywordsArr, target.value]
             }
-            return {...prevData, areasOfInfluence: keywordsArr}
+            return { ...prevData, areasOfInfluence: keywordsArr }
         })
     }
 
     const renderKeywords = () => {
         return keywords.map(keyword => (
-            <div key={keyword}>
-                <label>{keyword[0].toUpperCase() + keyword.slice(1)}: <input
-                    type="checkbox"
-                    value={keyword}
-                    onChange={handleCheckboxInput}
-                    defaultChecked={areasOfInfluence.includes(keyword)}
-                    /></label>
-            </div>
+            <Form.Check
+                key={keyword}
+                type="checkbox"
+                label={keyword[0].toUpperCase() + keyword.slice(1)}
+                value={keyword}
+                onChange={handleCheckboxInput}
+                defaultChecked={areasOfInfluence.includes(keyword)}
+                reverse
+                inline
+            />
         ))
     }
-    
+
     return (
-        <div>
-            <p>Please select areas of influence:</p>
+        <Form.Group>
+            <div className="mb-3">
+                <Form.Text>Please select the areas of influence:</Form.Text>
+            </div>
             {renderKeywords()}
-        </div>
+        </Form.Group>
     )
 }

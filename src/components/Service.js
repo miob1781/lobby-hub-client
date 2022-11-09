@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../context/auth.context";
 import axios from "axios";
 
@@ -48,7 +49,6 @@ export function Service(props) {
     const acceptOffer = () => {
         axios.put(`${process.env.REACT_APP_URL}/services/${serviceId}/accept-offer`, { politician: user._id }, { headers: { Authorization: `Bearer ${authToken}` } })
             .then(response => {
-                console.log("service after accepting offer:", response.data)
                 setService(response.data)
             })
             .catch(err => {
@@ -106,18 +106,18 @@ export function Service(props) {
     return (
         <div>
             {renderService()}
-            <form style={{ display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "inline-block" : "none" }} className="link end-buttons">
+            <form style={{ display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "inline-block" : "none" }} className="mb-3">
                 <button type="button" onClick={acceptOffer}>Accept Offer</button>
             </form>
-            <form style={{ display: type === "lobbyist" ? "inline-block" : "none" }} className="link end-buttons">
-                <button type="button" className="delete" onClick={deleteService}>Delete</button>
+            <form style={{ display: type === "lobbyist" ? "inline-block" : "none" }} className="mb-3">
+                <button type="button" className="mb-3 danger" onClick={deleteService}>Delete</button>
             </form>
-            <NavLink to={`/services/form/${serviceId}`} style={{ display: type === "lobbyist" ? "inline-block" : "none" }} className="link end-buttons">
+            <LinkContainer to={`/services/form/${serviceId}`} style={{ display: type === "lobbyist" ? "inline-block" : "none" }} className="mb-3">
                 <button>Edit</button>
-            </NavLink>
-            <NavLink to="/services" className="link end-buttons">
+            </LinkContainer>
+            <LinkContainer to="/services" className="mb-3">
                 <button>Back</button>
-            </NavLink>
+            </LinkContainer>
         </div>
     )
 }

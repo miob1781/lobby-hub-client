@@ -1,6 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
+import { Button } from "react-bootstrap";
 
-export function Home(props) {
+export function Home() {
     return (
         <div className="page">
             <div className="overlay-hero"></div>
@@ -12,15 +13,15 @@ export function Home(props) {
                 <div className="inner-container">
                     <div id="signup-lobbyist">
                         <p>I want to buy political services.</p>
-                        <NavLink to="/signup/lobbyist" className="link">
-                            <button className="auth">Register as lobbyist</button>
-                        </NavLink>
+                        <LinkContainer to="/signup/lobbyist">
+                            <Button>Register as lobbyist</Button>
+                        </LinkContainer>
                     </div>
                     <div>
                         <p>I want to sell political services.</p>
-                        <NavLink to="/signup/politician" className="link">
-                            <button className="auth">Register as politician</button>
-                        </NavLink>
+                        <LinkContainer to="/signup/politician">
+                            <Button>Register as politician</Button>
+                        </LinkContainer>
                     </div>
                 </div>
             </div>

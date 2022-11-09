@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-import { NavLink, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { KeywordsList } from "./KeywordsList";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
@@ -115,9 +116,9 @@ export function CreateService(props) {
                     <div className="link end-buttons">
                         <button className="auth">{createOrId !== "create" ? "Edit" : "Create"}</button>
                     </div>
-                    <NavLink to="/" className="link end-buttons">
+                    <LinkContainer to="/" className="mb-3">
                         <button type="button">Back</button>
-                    </NavLink>
+                    </LinkContainer>
                 </form>
             </div>
         </div>

@@ -1,7 +1,9 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import { Card, Form, Button } from "react-bootstrap"
+import { LinkContainer } from "react-router-bootstrap"
 
 export function Login(props) {
     const [username, setUsername] = useState("");
@@ -37,42 +39,50 @@ export function Login(props) {
         <div className="page">
             <div className="hero"></div>
             <div className="overlay-hero"></div>
-            <div className="inner-hero">
-                <h2>Login</h2>
-                <form onSubmit={handleLoginSubmit}>
-                    <label>Username: </label>
-                    <input
-                        type="text"
-                        name="username"
-                        value={username}
-                        autoComplete="username"
-                        onChange={handleUsername}
-                    />
-
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={password}
-                        autoComplete="current-password"
-                        onChange={handlePassword}
-                    />
-                    <div className="link end-buttons">
-                        <button type="submit" className="auth">Login</button>
+            <Card body style={{zIndex: "3", width: "min(280px, 80vw)"}}>
+                <Card.Title className="mb-3">Login</Card.Title>
+                <Form onSubmit={handleLoginSubmit}>
+                    <Form.Group className="mb-3">
+                        <Form.Label htmlFor="username">Username:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={username}
+                            autoComplete="username"
+                            onChange={handleUsername}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label htmlFor="password">Password:</Form.Label>
+                        <Form.Control
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={password}
+                            autoComplete="current-password"
+                            onChange={handlePassword}
+                        />
+                    </Form.Group>
+                    <div className="mb-3">
+                        <Button type="submit">Login</Button>
                     </div>
-                </form>
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-                <p>Don't have an account yet?</p>
-                <div className="link end-buttons">
-                    <NavLink to="/signup/lobbyist">
-                        <button className="auth">Register as lobbyist</button>
-                    </NavLink>
-                    <NavLink to="/signup/politician">
-                        <button className="auth">Register as politician</button>
-                    </NavLink>
+                    <div className="mb-3">
+                        {errorMessage ? <Form.Text className="text-danger">{errorMessage}</Form.Text> : null}
+                    </div>
+                </Form>
+                <div style={{ borderTop: "1.5px solid grey" }}>
+                    <div className="mt-3">
+                        <Form.Text>Don't have an account yet?</Form.Text>
+                    </div>
+                    <LinkContainer to="/signup/lobbyist" className="mb-3 mt-3">
+                        <Button>Register as lobbyist</Button>
+                    </LinkContainer>
+                    <LinkContainer to="/signup/politician" className="mb-3">
+                        <Button>Register as politician</Button>
+                    </LinkContainer>
                 </div>
-            </div>
+            </Card>
         </div>
     )
 }

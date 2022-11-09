@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../context/auth.context";
 
 export function Account(props) {
@@ -20,12 +20,12 @@ export function Account(props) {
                 <p style={{ display: type === "politician" ? "block" : "none" }}>Position: {position || "none"}</p>
                 <p style={{ display: type === "politician" ? "block" : "none" }}>Party: {party || "none"}</p>
                 {renderAreasOfInfluence(type, areasOfInfluence)}
-                <NavLink to={`/edit/${type}`} className="link end-buttons">
+                <LinkContainer to={`/edit/${type}`} className="mb-3">
                     <button>Edit Account</button>
-                </NavLink>
-                <NavLink to="/services" className="link end-buttons">
+                </LinkContainer>
+                <LinkContainer to="/services" className="mb-3">
                     <button>Services</button>
-                </NavLink>
+                </LinkContainer>
             </div>
         </div>
     )

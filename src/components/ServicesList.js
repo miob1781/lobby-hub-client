@@ -1,5 +1,5 @@
 import {useState, useEffect, useContext} from "react";
-import {NavLink} from "react-router-dom";
+import {LinkContainer} from "react-router-bootstrap";
 import {AuthContext} from "../context/auth.context";
 import axios from "axios";
 
@@ -50,7 +50,7 @@ export function ServicesList(props){
                 <h3>{service.title}</h3>
                 <p>Financial benefits: {service.financialOffer} $</p>
                 <p>Other benefits: {service.otherOffers}</p>
-                <NavLink to={`/services/${service._id}`} className="link end-buttons"><button className="details">Show Details</button></NavLink>
+                <LinkContainer to={`/services/${service._id}`} className="mb-3"><button className="details">Show Details</button></LinkContainer>
             </div>
         ))
     }
@@ -58,8 +58,8 @@ export function ServicesList(props){
     return (
         <div>
             <h2>Services</h2>
-            <NavLink to="/services/form/create" style={{display: type === "lobbyist" ? "block" : "none"}} className="link end-buttons"><button>New Service</button></NavLink>
-            <div style={{display: type === "politician" ? "block" : "none"}} className="link end-buttons">
+            <LinkContainer to="/services/form/create" style={{display: type === "lobbyist" ? "block" : "none"}} className="mb-3"><button>New Service</button></LinkContainer>
+            <div style={{display: type === "politician" ? "block" : "none"}} className="mb-3">
                 <button type="button" onClick={() => setTypeOfServices("matching")}>Services matching your keywords</button>
                 <button type="button" onClick={() => setTypeOfServices("agreed")}>Services you agreed on</button>
             </div>
