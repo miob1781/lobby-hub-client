@@ -16,11 +16,11 @@ export function NavBar() {
             <LinkContainer to="/our-mission">
                 <Nav.Link>Our Mission</Nav.Link>
             </LinkContainer>
-            {isLoggedIn
-                ? <form className="mb-3">
-                    <Button type="button" onClick={logOutUser}>Logout</Button>
-                </form>
-                : <LinkContainer to="/login">
+            {isLoggedIn ?
+                <form>
+                    <Button type="button" className="btn-link" style={{ textDecoration: "none" }} onClick={logOutUser}>Logout</Button>
+                </form> :
+                <LinkContainer to="/login">
                     <Nav.Link>Login</Nav.Link>
                 </LinkContainer>}
         </Nav>

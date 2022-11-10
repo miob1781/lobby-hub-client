@@ -138,6 +138,11 @@ form.link button {
     width: min(350px, 80vw);
     z-index: 3;
 } */
+
+.btn-link:hover {
+    background-color: inherit;
+}
+
 /* 
 @media screen and (max-width: 500px) {
     .inner-hero.down {
