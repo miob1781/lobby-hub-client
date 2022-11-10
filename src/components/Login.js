@@ -65,7 +65,7 @@ export function Login(props) {
                         />
                     </Form.Group>
                     <div className="mb-3">
-                        <Button type="submit">Login</Button>
+                        <Button type="submit" className="btn-success">Login</Button>
                     </div>
                     <div className="mb-3">
                         {errorMessage ? <Form.Text className="text-danger">{errorMessage}</Form.Text> : null}

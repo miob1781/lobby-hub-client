@@ -145,7 +145,7 @@ export function Signup(props) {
                     </div>
                     <Row className="mb-3 mt-4 justify-content-center">
                         <Col xs="4">
-                            <Button>{_id ? "Edit" : "Signup!"}</Button>
+                            <Button className="btn-success">{_id ? "Edit" : "Signup!"}</Button>
                         </Col>
                         <Col xs="4">
                             <LinkContainer to="/">
