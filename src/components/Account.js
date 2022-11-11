@@ -12,7 +12,7 @@ export function Account(props) {
         <Container className="d-flex justify-content-center">
             <div className="overlay-hero"></div>
             <div className="hero"></div>
-            <Card style={{ zIndex: "3", width: "min(360px, 80vw)", marginTop: "5vw" }}>
+            <Card body style={{ zIndex: "3", width: "min(360px, 80vw)", marginTop: "5vw" }}>
                 <Card.Title className="mb-3 mt-3">Account</Card.Title>
                 <Card.Text className="mb-3">User: {username}</Card.Text>
                 <Card.Text className="mb-3">Email: {email}</Card.Text>
