@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Row, Card, Button, ButtonToolbar } from "react-bootstrap";
+import { Container, Row, Card, Button, ButtonToolbar, Spinner } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../context/auth.context";
 import axios from "axios";
@@ -69,8 +69,8 @@ export function Service(props) {
         ))
     }
 
-    if (!service) return <p>Loading service...</p>
-    if (!matchingPoliticians || matchingPoliticians.length === 0) return <p>Loading politicians matching your request...</p>
+    if (!service) return <Spinner animation="border"/>
+    if (!matchingPoliticians || matchingPoliticians.length === 0) return <Spinner animation="border" />
     return (
         <Container>
             <h2 className="h2 mb-3">{service.title}</h2>

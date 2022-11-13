@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Container, Row, Col, Card, Button, ButtonToolbar } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, ButtonToolbar, Spinner } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../context/auth.context";
 import axios from "axios";
@@ -38,7 +38,7 @@ export function ServicesList(props) {
     const renderServices = () => {
         const services = typeOfServices === "agreed" ? agreedServices : matchingServices
         if (!services) {
-            return <p>Loading services...</p>
+            return <Spinner animation="border" />
         }
         if (services.length === 0 && typeOfServices === "agreed") {
             return <p>You have not {type === "lobbyist" ? "offered" : "agreed to"} any services yet.</p>
