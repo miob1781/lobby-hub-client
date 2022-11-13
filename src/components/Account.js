@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Card, Button, ButtonToolbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../context/auth.context";
 
@@ -21,18 +21,14 @@ export function Account(props) {
                 <Card.Text className="mb-3" style={{ display: type === "politician" ? "block" : "none" }}>Position: {position || "none"}</Card.Text>
                 <Card.Text className="mb-3" style={{ display: type === "politician" ? "block" : "none" }}>Party: {party || "none"}</Card.Text>
                 {renderAreasOfInfluence(type, areasOfInfluence)}
-                <Row className="justify-content-center mb-3 mt-3">
-                    <Col xs="5">
-                        <LinkContainer to={`/edit/${type}`} className="mb-3">
-                            <Button>Edit Account</Button>
-                        </LinkContainer>
-                    </Col>
-                    <Col xs="5">
-                        <LinkContainer to="/services" className="mb-3">
-                            <Button>Services</Button>
-                        </LinkContainer>
-                    </Col>
-                </Row>
+                <ButtonToolbar className="justify-content-center mb-3 mt-3">
+                    <LinkContainer to={`/edit/${type}`} className="mx-1">
+                        <Button>Edit Account</Button>
+                    </LinkContainer>
+                    <LinkContainer to="/services" className="mx-1">
+                        <Button>Services</Button>
+                    </LinkContainer>
+                </ButtonToolbar>
             </Card>
         </Container>
     )

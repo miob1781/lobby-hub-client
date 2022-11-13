@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap"
+import { Container, Row, Col, Card, Form, Button, ButtonToolbar } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
 import axios from "axios";
 import { KeywordsList } from "./KeywordsList";
@@ -143,16 +143,12 @@ export function Signup(props) {
                         {type === "politician" && (areasOfInfluence.length > 0 || !_id) &&
                             <KeywordsList areasOfInfluence={areasOfInfluence} setFormData={setFormData} />}
                     </div>
-                    <Row className="mb-3 mt-4 justify-content-center">
-                        <Col xs="4">
-                            <Button className="btn-success">{_id ? "Edit" : "Signup!"}</Button>
-                        </Col>
-                        <Col xs="4">
-                            <LinkContainer to="/">
-                                <Button type="button">Back</Button>
-                            </LinkContainer>
-                        </Col>
-                    </Row>
+                    <ButtonToolbar className="mb-3 mt-4 justify-content-center">
+                        <Button variant="success" className="mx-1">{_id ? "Edit" : "Signup!"}</Button>
+                        <LinkContainer to="/">
+                            <Button type="button" className="mx-1">Back</Button>
+                        </LinkContainer>
+                    </ButtonToolbar>
                 </Form>
             </Card>
         </Container>

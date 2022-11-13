@@ -99,7 +99,7 @@ export function Service(props) {
                     {renderPoliticians(matchingPoliticians, false)}
                 </Row>
             </div>
-            <ButtonToolbar className="d-flex justify-content-center my-3">
+            <ButtonToolbar className="justify-content-center my-3">
                 <Button type="button" onClick={acceptOffer} className="mx-1" style={{ display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "inline-block" : "none" }}>Accept Offer</Button>
                 <Button type="button" variant="danger" onClick={deleteService} className="mx-1" style={{ display: type === "lobbyist" ? "inline-block" : "none" }}>Delete</Button>
                 <LinkContainer to={`/services/form/${serviceId}`} className="mx-1" style={{ display: type === "lobbyist" ? "inline-block" : "none" }}>

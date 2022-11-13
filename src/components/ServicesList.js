@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, ButtonToolbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../context/auth.context";
 import axios from "axios";
@@ -60,16 +60,16 @@ export function ServicesList(props) {
 
     return (
         <Container>
-            <h2 className="display-5 mb-3">Services</h2>
+            <h2 className="h2 mb-3">Services</h2>
             <Col className="d-flex justify-content-center mb-3">
                 <LinkContainer to="/services/form/create" style={{ display: type === "lobbyist" ? "block" : "none" }} className="mb-3">
                     <Button variant="success">New Service</Button>
                 </LinkContainer>
             </Col>
-            <div style={{ display: type === "politician" ? "block" : "none" }} className="mb-3">
-                <Button type="button" onClick={() => setTypeOfServices("matching")}>Services matching your keywords</Button>
-                <Button type="button" onClick={() => setTypeOfServices("agreed")}>Services you agreed on</Button>
-            </div>
+            <ButtonToolbar style={{ display: type === "politician" ? "block" : "none" }} className="justify-content-center mb-3">
+                <Button type="button" variant="success" className="mx-1" onClick={() => setTypeOfServices("matching")}>Services matching your keywords</Button>
+                <Button type="button" variant="success" className="mx-1" onClick={() => setTypeOfServices("agreed")}>Services you agreed on</Button>
+            </ButtonToolbar>
             <Row className="d-flex justify-content-center">
                 {renderServices()}
             </Row>

@@ -1,21 +1,21 @@
 import './App.css';
-import {useContext} from "react";
-import {Routes, Route} from "react-router-dom";
+import { useContext } from "react";
+import { Routes, Route } from "react-router-dom";
 import { NavBar } from './components/NavBar';
 import { Account } from './components/Account';
 import { Home } from './components/Home';
-import {Signup} from './components/Signup';
-import {Login} from './components/Login';
+import { Signup } from './components/Signup';
+import { Login } from './components/Login';
 import { OurMission } from './components/OurMission';
 import { ServicesList } from './components/ServicesList';
 import { Service } from './components/Service';
-import {CreateService} from './components/CreateService';
+import { CreateService } from './components/CreateService';
 import { IsAnon } from './components/IsAnon';
 import { IsPrivate } from './components/IsPrivate';
 import { AuthContext } from './context/auth.context';
 
 function App() {
-    const {isLoggedIn} = useContext(AuthContext)
+    const { isLoggedIn } = useContext(AuthContext)
 
     const renderAreasOfInfluence = (type, areasOfInfluence) => {
         if (type !== "politician") return;
