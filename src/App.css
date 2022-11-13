@@ -3,26 +3,6 @@
     height: 100%;
 }
 
-/* nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 10vh;
-}
-
-.link button,
-form.link button {
-    background-color: burlywood;
-    color: white;
-    padding: 10px;
-    border: 2px solid grey;
-    border-radius: 3%;
-    box-shadow: 0 10px 15px 0;
-    font-weight: 500;
-    font-size: 1.05rem;
-    cursor: pointer;
-} */
-
 .page {
     display: flex;
     flex-direction: column;
@@ -84,69 +64,12 @@ form.link button {
     font-size: 1.1rem;   
 }
 
-/* .link .auth {
-    background-color: turquoise;
-    font-weight: 600;
-} */
-
 #signup-lobbyist {
     padding-bottom: 30px;
     margin-bottom: 20px;
     border-bottom: 1.5px solid grey;
 }
 
-/* .inner-hero {
-    position: absolute;
-    padding: 2vw;
-    margin: 0 50px;
-    background-color: white;
-    z-index: 3;
-}
-
-.link.end-buttons {
-    display: inline-block;
-    margin: 5px 0;
-}
-
-.link.end-buttons button {
-    margin: 5px;
-}
-
-.link.end-buttons .delete {
-    background-color: red;
-}
-
-.link.end-buttons .details {
-    background-color: darkcyan;
-}
-
-.card-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 0 10px
-} */
-
-/* .card {
-    width: 300px;
-    background-color: turquoise;
-    color: white;
-    margin: 5px;
-} */
-
-/* .bootstrap-card {
-    width: min(350px, 80vw);
-    z-index: 3;
-} */
-
 .btn-link:hover {
     background-color: inherit;
 }
-
-/* 
-@media screen and (max-width: 500px) {
-    .inner-hero.down {
-        position: relative;
-        top: 150px;
-    }
-} */
