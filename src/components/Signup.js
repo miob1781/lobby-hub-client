@@ -64,84 +64,78 @@ export function Signup(props) {
             <div className="overlay-hero"></div>
             <div className="hero"></div>
             <Card body style={{ zIndex: "3", width: "min(300px, 80vw)", marginTop: "5vw" }}>
-                <div className="mb-3 mt-3">
+                <div className="my-3">
                     <Card.Title>{_id ? "Edit your user data" : "Signup"}</Card.Title>
                 </div>
                 <Form onSubmit={_id ? submitUpdate : submitSignup}>
-                    <Row className="mb-3">
-                        <Form.Label column="md" htmlFor="username">Username:</Form.Label>
+                    <Form.Group as={Row} className="mb-3">
+                        <Form.Label column="md">Username:</Form.Label>
                         <Col xs="7">
                             <Form.Control
                                 type="text"
-                                id="username"
                                 value={username}
                                 onChange={({ target }) => handleInputChange(target, "username")}
                                 autoComplete="username"
                                 required
                             />
                         </Col>
-                    </Row>
-                    <Row className="mb-3">
-                        <Form.Label column="md" htmlFor="email">Email:</Form.Label>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                        <Form.Label column="md">Email:</Form.Label>
                         <Col xs="7">
                             <Form.Control
                                 type="email"
-                                id="email"
                                 value={email}
                                 onChange={({ target }) => handleInputChange(target, "email")}
                                 required
                             />
                         </Col>
-                    </Row>
-                    <Row className="mb-3">
-                        <Form.Label column="md" htmlFor="password">Password:</Form.Label>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3">
+                        <Form.Label column="md">Password:</Form.Label>
                         <Col xs="7">
                             <Form.Control
                                 type="password"
-                                id="password"
                                 value={password}
                                 onChange={({ target }) => handleInputChange(target, "password")}
                                 autoComplete={_id ? "current-password" : "new-password"}
                                 required
                             />
                         </Col>
-                    </Row>
-                    <Row className="mb-3" style={{ display: type === "lobbyist" ? "flex" : "none" }}>
-                        <Form.Label column="md" htmlFor="organization">Organization:</Form.Label>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3" style={{ display: type === "lobbyist" ? "flex" : "none" }}>
+                        <Form.Label column="md">Organization:</Form.Label>
                         <Col xs="7">
                             <Form.Control
                                 type="text"
-                                id="organization"
                                 value={organization}
                                 onChange={({ target }) => handleInputChange(target, "organization")}
                             />
                         </Col>
-                    </Row>
-                    <Row className="mb-3" style={{ display: type === "politician" ? "flex" : "none" }}>
-                        <Form.Label column="md" htmlFor="position">Position:</Form.Label>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3" style={{ display: type === "politician" ? "flex" : "none" }}>
+                        <Form.Label column="md">Position:</Form.Label>
                         <Col xs="7">
                             <Form.Control
                                 type="text"
-                                id="position"
                                 value={position}
                                 onChange={({ target }) => handleInputChange(target, "position")}
                             />
                         </Col>
-                    </Row>
-                    <Row className="mb-3" style={{ display: type === "politician" ? "flex" : "none" }}>
-                        <Form.Label column="md" htmlFor="party">Party:</Form.Label>
+                    </Form.Group>
+                    <Form.Group as={Row} className="mb-3" style={{ display: type === "politician" ? "flex" : "none" }}>
+                        <Form.Label column="md">Party:</Form.Label>
                         <Col xs="7">
                             <Form.Control
                                 type="text"
-                                id="party"
                                 value={party}
                                 onChange={({ target }) => handleInputChange(target, "party")}
                             />
                         </Col>
-                    </Row>
+                    </Form.Group>
                     <div className="mb-3" style={{ display: type === "politician" ? "flex" : "none" }}>
-                        {type === "politician" && (areasOfInfluence.length > 0 || !_id) &&
-                            <KeywordsList areasOfInfluence={areasOfInfluence} setFormData={setFormData} />}
+                        {type === "politician" && (areasOfInfluence.length > 0 || !_id) ?
+                            <KeywordsList areasOfInfluence={areasOfInfluence} setFormData={setFormData} /> : null}
                     </div>
                     <ButtonToolbar className="mb-3 mt-4 justify-content-center">
                         <Button variant="success" className="mx-1">{_id ? "Edit" : "Signup!"}</Button>
