@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Container, Row, Card, Button, ButtonToolbar } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../context/auth.context";
 import axios from "axios";
@@ -36,7 +37,7 @@ export function Service(props) {
             })
     }, [service])
 
-    const deleteService = (event) => {
+    const deleteService = () => {
         axios.delete(`${process.env.REACT_APP_URL}/services/${serviceId}`, { headers: { Authorization: `Bearer ${authToken}` } })
             .then(() => {
                 navigate("/services")
@@ -56,68 +57,58 @@ export function Service(props) {
             })
     }
 
-    const renderPoliticians = politicians => {
+    const renderPoliticians = (politicians, hasAccepted) => {
         return politicians?.map(politician => (
-            <article key={politician?._id} className="card">
-                <p>Name: {politician?.username}</p>
-                <p>Email: {politician?.email}</p>
-                <p>Position: {politician?.position}</p>
-                <p>Party: {politician?.party}</p>
-                {politician && renderAreasOfInfluence("politician", politician?.areasOfInfluence)}
-            </article>
+            <Card body key={politician?._id} bg={hasAccepted ? "success" : "primary"} text="white" className="m-2" style={{ width: "min(300px, 80vw)" }}>
+                <Card.Title className="mb-3">Name: {politician?.username}</Card.Title>
+                <Card.Text className="mb-3">Email: {politician?.email}</Card.Text>
+                <Card.Text className="mb-3">Position: {politician?.position}</Card.Text>
+                <Card.Text className="mb-3">Party: {politician?.party}</Card.Text>
+                {politician ? renderAreasOfInfluence("politician", politician?.areasOfInfluence) : null}
+            </Card>
         ))
     }
 
-    const renderService = () => {
-        if (!service) return <p>Loading service...</p>
-        if (!matchingPoliticians || matchingPoliticians.length === 0) return <p>Loading politicians matching your request...</p>
-        return (
-            <div>
-                <h3>{service.title}</h3>
-                <p style={{ display: type === "politician" && service?.politicians.find(pol => pol._id === user._id) ? "block" : "none" }}>You have accepted this offer.</p>
-                <p>Description: {service.description}</p>
-                <div style={{ display: type === "politician" ? "block" : "none" }}>
-                    <p>Requested by: {service?.lobbyist?.username}</p>
-                    <p>Organization: {service?.lobbyist?.organization}</p>
-                </div>
-                {renderAreasOfInfluence("politician", service?.areasOfInfluence)}
-                <p>Financial benefit: {service?.financialOffer} $</p>
-                <p>Other benefits: {service?.otherOffers}</p>
-                <div style={{ display: type === "lobbyist" ? "block" : "none" }}>
-                    {service.politicians.length === 0
-                        ? <p>So far no politician has accepted your offer.</p>
-                        : <div>
-                            <p>These politicians have accepted your offer:</p>
-                            <div className="card-container">
-                                {renderPoliticians(service?.politicians)}
-                            </div>
-                        </div>}
-                </div>
-                <div style={{ display: type === "lobbyist" ? "block" : "none" }}>
-                    <p>Politicians matching your request:</p>
-                    <div className="card-container">
-                        {renderPoliticians(matchingPoliticians)}
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
+    if (!service) return <p>Loading service...</p>
+    if (!matchingPoliticians || matchingPoliticians.length === 0) return <p>Loading politicians matching your request...</p>
     return (
-        <div>
-            {renderService()}
-            <form style={{ display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "inline-block" : "none" }} className="mb-3">
-                <button type="button" onClick={acceptOffer}>Accept Offer</button>
-            </form>
-            <form style={{ display: type === "lobbyist" ? "inline-block" : "none" }} className="mb-3">
-                <button type="button" className="mb-3 danger" onClick={deleteService}>Delete</button>
-            </form>
-            <LinkContainer to={`/services/form/${serviceId}`} style={{ display: type === "lobbyist" ? "inline-block" : "none" }} className="mb-3">
-                <button>Edit</button>
-            </LinkContainer>
-            <LinkContainer to="/services" className="mb-3">
-                <button>Back</button>
-            </LinkContainer>
-        </div>
+        <Container>
+            <h2 className="h2 mb-3">{service.title}</h2>
+            <p className="mb-3" style={{ display: type === "politician" && service?.politicians.find(pol => pol._id === user._id) ? "block" : "none" }}>You have accepted this offer.</p>
+            <p className="mb-3">Description: {service.description}</p>
+            <div className="mb-3" style={{ display: type === "politician" ? "block" : "none" }}>
+                <p>Requested by: {service?.lobbyist?.username}</p>
+                <p>Organization: {service?.lobbyist?.organization}</p>
+            </div>
+            {renderAreasOfInfluence("politician", service?.areasOfInfluence)}
+            <p className="mb-3">Financial benefit: {service?.financialOffer} $</p>
+            <p className="mb-3">Other benefits: {service?.otherOffers}</p>
+            <div style={{ display: type === "lobbyist" ? "block" : "none" }}>
+                {service.politicians.length === 0
+                    ? <p className="mb-3">So far no politician has accepted your offer.</p>
+                    : <div>
+                        <p className="mb-3">These politicians have accepted your offer:</p>
+                        <Row className="d-flex justify-content-center">
+                            {renderPoliticians(service?.politicians, true)}
+                        </Row>
+                    </div>}
+            </div>
+            <div style={{ display: type === "lobbyist" ? "block" : "none" }}>
+                <p className="my-3">Politicians matching your request:</p>
+                <Row className="d-flex justify-content-center">
+                    {renderPoliticians(matchingPoliticians, false)}
+                </Row>
+            </div>
+            <ButtonToolbar className="d-flex justify-content-center my-3">
+                <Button type="button" onClick={acceptOffer} className="mx-1" style={{ display: type === "politician" && !service?.politicians.find(pol => pol._id === user._id) ? "inline-block" : "none" }}>Accept Offer</Button>
+                <Button type="button" variant="danger" onClick={deleteService} className="mx-1" style={{ display: type === "lobbyist" ? "inline-block" : "none" }}>Delete</Button>
+                <LinkContainer to={`/services/form/${serviceId}`} className="mx-1" style={{ display: type === "lobbyist" ? "inline-block" : "none" }}>
+                    <Button>Edit</Button>
+                </LinkContainer>
+                <LinkContainer to="/services" className="mx-1">
+                    <Button>Back</Button>
+                </LinkContainer>
+            </ButtonToolbar>
+        </Container>
     )
 }
